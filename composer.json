@@ -7,6 +7,7 @@
 	"require" :
   {
     "php": "~5.5",
-    "ext-pgsql": "*"
+    "ext-pgsql": "*",
+    "enelar/phpsql": "~0.0",
   }
 }
