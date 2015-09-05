@@ -2,5 +2,11 @@
   "name": "exsul/synchrotalk",
   "description": "Online web chat",
   "license": "proprietary",
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+
+	"require" :
+  {
+    "php": "~5.5",
+    "ext-pgsql": "*"
+  }
 }
