@@ -8,20 +8,21 @@ include_once('vendor/enelar/phpsql/phpsql.php'); //Включения
 include_once('vendor/enelar/phpsql/pgsql.php');
 $sql = new phpsql();
 $pg = $sql->Connect("pgsql://postgres@localhost/synchrotalk");
-$a=$pg -> Query ("select * from sometable");
-$numa=pg_num_rows($a);
-echo "$numa";
+$verynew=$pg -> Query ("select * from users WHERE username='Misha'");
+//$a=$pg -> Query ("select * from sometable");
+//$numa=pg_num_rows($a);
+//echo "$numa";
 //$a=$pg -> Query ("select * from sometable WHERE id=5");
 //$a=$pg -> Query ("select * from sometable WHERE id=$1",[5]);
-//var_dump($a); 
+//var_dump($verynew); 
 
   
 if(isset($_POST["register"])){                                                            //Если пользователь нажал на кнопку
   if(!empty($_POST['username']) && !empty($_POST['password'])) {                          //Если поля не пустые
     $username=htmlspecialchars($_POST['username']);                                       //Возьми параметр с поля "Юзер"
     $password=htmlspecialchars($_POST['password']);                                       //И параметр с поля "Пасс"   
-    $sameusers=$pg -> Query ("select * from users WHERE username='".$username."'");         //Узнай сколько в базе 
-    $numrows=pg_num_rows($sameusers);                                                       //Таких же колонок
+    $sameusers=$pg -> Query ("select * from users WHERE username='".$username."'");       //Узнай сколько в базе 
+    $numrows=count($sameusers);                                                    //Таких же колонок
     if($numrows==0){                                                                      //И если 0 то отправь их 
       $useradd="INSERT INTO users (username,password) VALUES ('$username', '$password')"; //В таблицу
       $result= $pg->Query ($useradd);                                                     //Наших чарующих баз
