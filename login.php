@@ -24,14 +24,14 @@ if(isset($_POST["login"])){
   if(!empty($_POST['username']) && !empty($_POST['password'])) {
     $username=($_POST["username"]);
     $password=($_POST["password"]);
-    $users_query=db::Query("SELECT * FROM users WHERE username=$1 AND password=$2",[$username,$password]); //Запрос
+    $users_query=db::Query("SELECT * FROM users WHERE username=$1 AND password=$2",[$username,$password],true); //Запрос
     var_dump($users_query);
     if($users_query())
     {
      // while($users_query) //Преврщаем его в ассоц массив
      // {
-        $dbusername=$users_query[0]['username']; 
-        $dbpassword=$users_query[0]['password'];
+        $dbusername=$users_query['username']; 
+        $dbpassword=$users_query['password'];
 
 
      // }
