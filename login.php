@@ -30,8 +30,9 @@ if(isset($_POST["login"])){
     {
      // while($users_query) //Преврщаем его в ассоц массив
      // {
-     //   $dbusername=$row['username'];
-     //   $dbpassword=$row['password'];
+        $dbusername=$users_query[0]['username']; 
+        var_dump($dbusername); //$row['username'];
+       //$dbpassword=$row['password'];
      // }
       exit();
       if ($dbusername==$username && $dbpassword==$password){
