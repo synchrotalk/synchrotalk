@@ -31,13 +31,13 @@ if(isset($_POST["login"])){
      // while($users_query) //Преврщаем его в ассоц массив
      // {
         $dbusername=$users_query[0]['username']; 
-        var_dump($dbusername); //$row['username'];
-       //$dbpassword=$row['password'];
+        $dbpassword=$users_query[0]['password'];
+
+
      // }
-      exit();
       if ($dbusername==$username && $dbpassword==$password){
         $_SESSION['session_username']=$username;
-        header("Location: intropage.php");
+        echo "Вы вошли, приятного дня.";
       }
     }
       else {
