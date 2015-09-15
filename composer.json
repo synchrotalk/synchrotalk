@@ -8,7 +8,8 @@
   {
     "php": "~5.5",
     "ext-pgsql": "*",
-    "enelar/phpsql": "~0.0"
+    "enelar/phpsql": "~0.0",
+    "phoxy/phoxy": "~1.4.1"
   },
  "repositories":
   [
