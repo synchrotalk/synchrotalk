@@ -10,7 +10,7 @@ DirectorySlash Off
 RedirectMatch 403 /\.git
 
 # ATTENTION! Do not forget make true 404 file!
-ErrorDocument 404 load.html
+ErrorDocument 404 404.html
 
 # By default cache any static files for hour
 <FilesMatch ".(ejs|css|js)$">
@@ -40,4 +40,4 @@ RewriteRule ^enjs$ phoxy/enjs.php [END,PT,QSA]
 
 # Any request of api folder hooks into rpc file
 RewriteRule ^api/$ api/main/home [QSA]
-RewriteRule ^api/(.*)$ /engine/api.php?api=$1 [END,PT,QSA]
+RewriteRule ^api/(.*)$ /api.php?REDIRECTIT/$0REDIRECTIT [END,PT,QSA]
