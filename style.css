@@ -2,6 +2,11 @@ html {
   
 }
 
+a:visited{
+  color:white;
+  font-style: normal;
+}
+
 h1 {
   text-align: center;
 }
@@ -26,7 +31,7 @@ h1 {
 }
 
 .regtext {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .container p {

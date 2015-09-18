@@ -11,12 +11,14 @@ $sql = new phpsql();
 $pg = $sql->Connect("pgsql://postgres@localhost/synchrotalk");
 include_once('vendor/enelar/phpsql/db.php');
 db::Bind(new phpsql\utils\wrapper($pg));
+?>
 
 
+<!-- There was a HOLE here
+It's gone now.-->
 
-if (!empty($message)) {echo "<p class=\"error\">" . "MESSAGE: ". $message . "</p>";} ?>
 
-<div class="container mregister">
+<div class="container mregister"> 
 <div id="login">
 <h1>Регистрация</h1>
 <form action="/api/user/register" id="registerform" method="post"name="registerform">
@@ -25,7 +27,7 @@ if (!empty($message)) {echo "<p class=\"error\">" . "MESSAGE: ". $message . "</p
 <p><label for="user_pass">Пароль<br>
 <input class="input" id="password" name="password"size="20"   type="password" value=""></label></p>
 <p class="submit"><input class="button" id="register" name= "register" type="submit" value="Зарегистрироваться"></p>
-<p class="regtext">Уже зарегистрированы? <a href= "login.php">Введите имя пользователя</a>!</p>
+<p class="regtext">Уже зарегистрированы?<br> <a href= "login.php">Введите имя пользователя</a>!</p>
  </form>
 </div>
 </div>
