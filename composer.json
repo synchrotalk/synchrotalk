@@ -1,5 +1,7 @@
 {
-  "license": "Proprietary",
+  "name": "phoxy/bootstrap",
+  "description": "Little amount of files, required to best phoxy experience",
+  "license": "MIT",
   "minimum-stability": "dev",
   "require" :
   {
