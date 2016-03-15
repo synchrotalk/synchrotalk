@@ -15,4 +15,13 @@
     });
   %>
   <% __this.CascadeDesign('threads/add-thread-form',{}); %>
+  <div class="ui container">
+  <%
+
+    for (var n in __this.threads){
+      __this.CascadeDesign('threads/message', __this.threads[n]);
+    }
+
+  %>
+  </div>
 </div>

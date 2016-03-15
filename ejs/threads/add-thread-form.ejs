@@ -22,7 +22,10 @@
       //Send inputs data
       phoxy.ApiRequest(['threads/add', idata], function(data)
       {
-
+        if(data.data.add)
+        {
+          window.location.href = '/thread/'+data.data.add;
+        }
       });
 
     });
