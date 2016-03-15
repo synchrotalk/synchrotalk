@@ -1,0 +1,27 @@
+<div class="ui action input">
+  <input type="text" placeholder="Type your username..." required="">
+  <button class="ui button">Login</button>
+</div>
+<%
+__this.Defer(function()
+{
+  __this.first().find('button').click(function(){
+
+    if(__this.first().find('input').val()=="")
+    {
+      alert("Username required!");
+      return;
+    }
+    var username = __this.first().find('input').val();
+    phoxy.ApiRequest(['auth/site', username], function(data)
+    {
+      if(data.login==true){
+        alert("Welcome "+username+"!");
+        window.location.href = "/threads";
+      }
+    });
+
+  });
+
+});
+%>
