@@ -1,0 +1,18 @@
+<div class="ui">
+  <h2 style="display:inline-block">Threads Page</h2>
+  <div style="display:inline-block; margin-left: 20px;" class="ui icon button" data-content="Add thread." data-variation="basic">
+    <i class="add icon"></i>
+  </div>
+  <%
+    __this.Defer(function(){
+      __this.first().find('div').click(function(){
+        if($('#add-thread-form').css('display')=="none"){
+          $('#add-thread-form').show();
+        }else{
+          $('#add-thread-form').hide();
+        }
+      });
+    });
+  %>
+  <% __this.CascadeDesign('threads/add-thread-form',{}); %>
+</div>
