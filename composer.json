@@ -1,21 +1,16 @@
 {
-  "name": "exsul/synchrotalk",
-  "description": "Online web chat",
-  "license": "proprietary",
+  "name": "phoxy/bootstrap",
+  "description": "Little amount of files, required to best phoxy experience",
+  "license": "MIT",
   "minimum-stability": "dev",
-
-	"require" :
+  "require" :
   {
     "php": "~5.5",
-    "ext-pgsql": "*",
-    "enelar/phpsql": "~0.0",
-    "phoxy/phoxy": "~1.4.1"
-  },
- "repositories":
-  [
-    {
-      "type": "vcs",
-      "url": "https://github.com/enelar/phpsql"
-    }
-  ]
+    "phoxy/phoxy": "~1.4.2",
+    "phoxy/snippets": "~0",
+    "enelar/phpa2o" : "~0",
+    "mustangostang/spyc": "~0.5",
+    "tedivm/jshrink": "~1.0",
+    "enelar/phpsql": "~0"
+  }
 }

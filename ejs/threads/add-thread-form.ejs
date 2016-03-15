@@ -1,0 +1,33 @@
+<form id="add-thread-form" class="ui form" style="display:none;">
+  <div class="field">
+    <label>Thread title</label>
+    <input name="thread-title" type="text">
+  </div>
+  <div class="field">
+    <label>Users</label>
+    <input name="thread-users" type="text" value="">
+  </div>
+  <button class="ui submit button">Create thread</button>
+  <div class="ui error message"></div>
+</form>
+<%
+  __this.Defer(function(){
+    __this.first().on("submit", function(e){
+      e.preventDefault();
+      //Get inputs data
+      var idata = {
+        title:__this.first().find('input[name=thread-title]').val(),
+        members:__this.first().find('input[name=thread-users]').val().split(', ')
+      };
+      //Send inputs data
+      phoxy.ApiRequest(['threads/add', idata], function(data)
+      {
+        if(data.data.add)
+        {
+          window.location.href = '/thread('+data.data.add+')';
+        }
+      });
+
+    });
+  });
+%>
