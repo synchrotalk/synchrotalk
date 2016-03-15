@@ -1,0 +1,33 @@
+<div class="ui container">
+  <h2 id="t-with">Thread with: </h2>
+  <div class="t-messages">
+    <div class="l-message">
+      sdfsdf
+      <hr>
+    </div>
+    <div class="r-message">
+      sdfsdf
+      <hr>
+    </div>
+  </div>
+  <div class="t-send-message">
+    <button>Send message</button>
+  </div>
+</div>
+
+<%
+  __this.Defer(function(){
+
+    //output thread members
+    var t_with = __this.first().find('#t-with').html();
+    var t_members = '';
+    for(m in __this.members){
+      if(m==0)
+        t_members = t_members+__this.members[m].username;
+      else
+        t_members = t_members+', '+__this.members[m].username;
+    }
+    __this.first().find('#t-with').html(t_with+t_members);
+
+  });
+%>
