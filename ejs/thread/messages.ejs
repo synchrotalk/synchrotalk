@@ -1,0 +1,11 @@
+<% if(__this.username==__this.user){ %>
+  <div class="r-message">
+    <h3><%@ __this.username %></h3>
+    <p><%@ __this.message %></p>
+  </div>
+<% }else{ %>
+<div class="l-message">
+  <h3><%@ __this.username %></h3>
+  <p><%@ __this.message %></p>
+</div>
+<% } %>

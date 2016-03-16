@@ -1,0 +1,25 @@
+<div class="t-send-message ui action input">
+  <form>
+    <input type="text" placeholder="Type your message here...">
+    <button class="ui button">Send message</button>
+  </form>
+</div>
+
+<%
+__this.Defer(function(){
+  //disallow form redirect
+  $("form").submit(function( event ) {
+    event.preventDefault();
+  });
+
+  __this.first().find('button').click(function(){
+    var message = __this.first().find('input').val();
+      if(message!==""){
+        phoxy.ApiRequest(['thread/add_message', __this.t_id, __this.username, message], function()
+        {
+          __this.first().find('input').val('');
+        });
+      }
+  });
+});
+%>
