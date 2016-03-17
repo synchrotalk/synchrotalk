@@ -1,3 +1,3 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/cd133d34a2784af4851be58ccc50bcca)](https://www.codacy.com/app/enelar/bootstrap)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/e9542e419e034fa3b0284955db54b3f0)](https://www.codacy.com/app/enelar/synchrotalk)
 
-Chat Engine
+Multiply social networks in single application
