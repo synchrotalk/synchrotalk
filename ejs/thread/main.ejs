@@ -1,23 +1,52 @@
 <div class="ui container">
   <h2 id="t-with">Thread with: </h2>
   <div class="t-messages">
-    <div class="l-message">
-      sdfsdf
-      <hr>
-    </div>
-    <div class="r-message">
-      sdfsdf
-      <hr>
-    </div>
+
+  <%
+    for(n in __this.messages){
+      __this.messages[n]['user'] = __this.username;
+      __this.CascadeDesign('thread/messages', __this.messages[n]);
+    }
+  %>
   </div>
-  <div class="t-send-message">
-    <button>Send message</button>
-  </div>
+
+  <%
+    var sdata = {username:__this.username, t_id:__this.t_id};
+    __this.CascadeDesign('thread/send-message',sdata);
+  %>
+
 </div>
 
 <%
-  __this.Defer(function(){
+  //message updater
+  if(__this.messages[0])
+    last_id = __this.messages[__this.messages.length - 1]['id'];
+  else
+    last_id = 0;
 
+  setInterval(function(){
+    var old_messages = __this.first().find('.t-messages').html();
+
+    phoxy.ApiRequest(['thread/get_messages',__this.t_id, last_id], function(data)
+    {
+      var new_messages = data.data.get_messages;
+      var new_divs = "";
+      for(k in new_messages){
+        if(new_messages[k]['username']==__this.username){
+          var message = "<div class='r-message'><h3>"+new_messages[k]['username']+"</h3><p>"+new_messages[k]['message']+"</p></div>";
+        }else{
+          var message = "<div class='l-message'><h3>"+new_messages[k]['username']+"</h3><p>"+new_messages[k]['message']+"</p></div>";
+        }
+        new_divs = new_divs+message;
+        last_id = new_messages[k]['id'];
+      }
+      __this.first().find('.t-messages').html(old_messages+new_divs);
+      __this.first().find('.t-messages').scrollTop(1000+last_id);
+    });
+  }, 1000);
+
+  //theard members
+  __this.Defer(function(){
     //output thread members
     var t_with = __this.first().find('#t-with').html();
     var t_members = '';
@@ -30,4 +59,6 @@
     __this.first().find('#t-with').html(t_with+t_members);
 
   });
+
+  debugger;
 %>

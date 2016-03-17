@@ -13,13 +13,17 @@
   border-bottom: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  background-color: rgba(175, 175, 175, 0.38);
+  background-color: rgb(241, 241, 241)
 }
 .t-messages .l-message{
   float: left;
-  width: 100%
+  width: 100%;
+  text-align: left;
+  padding: 10px;
 }
 .t-messages .r-message{
   float: right;
-  width: 100%
+  width: 100%;
+  text-align: right;
+  padding: 10px;
 }
