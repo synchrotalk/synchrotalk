@@ -1,10 +1,11 @@
-.t-messages{
-  width: 630px;
-  overflow-y: scroll;
-  height: 260px;
-  border-top: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+
+@media (min-width 768px){
+  .t-send-message{
+    width: 338px;
+  }
+  .t-messages{
+    width: 338px;
+  }
 }
 .t-send-message{
   box-sizing: border-box;
@@ -13,7 +14,7 @@
   border-bottom: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  background-color: rgb(241, 241, 241)
+  background-color: rgb(241, 241, 241);
 }
 .t-messages .l-message{
   float: left;
