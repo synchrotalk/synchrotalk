@@ -9,9 +9,6 @@ route:
 
   - url: \/less
     script: engine/less.php
-    static: true
-    compress: true
-    mime: text/css
 
   - url: \/(.+\.js)$
     static: true

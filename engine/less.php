@@ -1,10 +1,15 @@
 <?php
-$options = array( 'compress'=>true );
-$parser = new Less_Parser();
-header("Content-Type: text/css");
-foreach(glob('./less'.'/*.less*') as $file) {
-    $parser->parseFile( $file, '' );
-}
-$css = $parser->getCss();
-echo $css;
+  include("vendor/autoload.php");
+  $less = new lessc;
+  try
+  {
+    $css = $less->compileFile("less/style.less");
+    header("Content-Type: text/css");
+    header("Cache-Control: public, max-age=3600");
+
+    echo $css;
+  } catch (Exception $e)
+  {
+    echo $e->getMessage();
+  }
 ?>
