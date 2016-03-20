@@ -1,11 +1,20 @@
-<div class="ui"><h2>Login User Page</h2></div>
-<div id="log-as" style="display: none;" class="ui">You are logged as </div>
+<div class="ui container">
+  <div class="ui"><h2>Login User Page</h2></div>
+
+  <div class="ui info message">
+    <i class="close icon"></i>
+    <div class="header"></div>
+  </div>
+</div>
 <%
 __this.Defer(function(){
+  __this.first().find('.info').hide();
+  __this.first().find('.close').click(function(){
+    __this.first().find('.info').hide();
+  });
   if(__this.username){
-    var log_as_html = $('#log-as').html();
-    $('#log-as').html(log_as_html+__this.username);
-    $('#log-as').show();
+    __this.first().find('.header').html('You are logged as '+__this.username);
+    __this.first().find('.info').show();
   }
 
   });
