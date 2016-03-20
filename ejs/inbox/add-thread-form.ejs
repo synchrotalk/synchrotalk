@@ -20,7 +20,7 @@
         members:__this.first().find('input[name=thread-users]').val().split(', ')
       };
       //Send inputs data
-      phoxy.ApiRequest(['threads/add', idata], function(data)
+      phoxy.ApiRequest(['inbox/add', idata], function(data)
       {
         if(data.data.add)
         {
