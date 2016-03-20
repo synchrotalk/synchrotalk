@@ -22,6 +22,23 @@ class user extends api
     ];
   }
 
+  protected function auth($username)
+  {
+    $login = false;
+    if($username!=="")
+    {
+      session_start();
+      $_SESSION['username'] = $username;
+      $login = true;
+    }
+    return
+    [
+      'design' => 'user/login',
+      'login' => $login,
+    ];
+  }
+
+
   protected function GetUserName()
   {
     session_start();

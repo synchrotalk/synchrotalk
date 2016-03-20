@@ -1,23 +1,35 @@
-<div class="ui action input">
-  <input type="text" placeholder="Type your username..." required="">
-  <button class="ui button">Login</button>
+<div class="ui container">
+  <div class="ui success message">
+    <i class="close icon"></i>
+    <div class="header"></div>
+  </div>
+
+  <div class="ui action input">
+    <input type="text" placeholder="Type your username..." required="">
+    <button class="ui button">Login</button>
+  </div>
 </div>
 <%
 __this.Defer(function()
 {
+  __this.first().find('.message').hide();
+  __this.first().find('.close').click(function(){
+    __this.first().find('.message').hide();
+  });
+
   __this.first().find('button').click(function(){
 
     if(__this.first().find('input').val()=="")
     {
-      alert("Username required!");
+      __this.first().find('.header').html('Username required!');
+      __this.first().find('.message').show();
       return;
     }
     var username = __this.first().find('input').val();
-    phoxy.ApiRequest(['auth/site', username], function(data)
+    phoxy.ApiRequest(['user/auth', username], function(data)
     {
       if(data.login==true){
-        alert("Welcome "+username+"!");
-        window.location.href = "/threads";
+        phoxy.MenuCall('/inbox');
       }
     });
 
