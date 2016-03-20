@@ -1,6 +1,6 @@
-<div class="ui">
-  <h2 style="display:inline-block">Threads Page</h2>
-  <div id="add-ico" style="display:inline-block; margin-left: 20px;" class="ui icon button" data-content="Add thread." data-variation="basic">
+<div class="ui inbox">
+  <h2>Threads Page</h2>
+  <div id="add-ico" class="ui icon button add-thread">
     <i class="add icon"></i>
   </div>
   <%
@@ -15,7 +15,7 @@
     });
   %>
   <% __this.CascadeDesign('inbox/add-thread-form',{}); %>
-  <div class="ui container" style="overflow-y:scroll; max-height:700px;">
+  <div class="ui container messages">
   <%
 
     for (var n in __this.threads){

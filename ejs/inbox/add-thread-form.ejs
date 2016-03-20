@@ -1,4 +1,4 @@
-<form id="add-thread-form" class="ui form" style="display:none;">
+<form id="add-thread-form" class="ui form add-thread-form">
   <div class="field">
     <label>Thread title</label>
     <input name="thread-title" type="text">
@@ -9,6 +9,7 @@
   </div>
   <button class="ui submit button">Create thread</button>
   <div class="ui error message"></div>
+  <hr>
 </form>
 <%
   __this.Defer(function(){
