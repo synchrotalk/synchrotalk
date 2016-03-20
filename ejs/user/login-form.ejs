@@ -1,5 +1,5 @@
 <div class="ui container">
-  <div class="ui success message">
+  <div class="ui hidden success message">
     <i class="close icon"></i>
     <div class="header"></div>
   </div>
@@ -12,7 +12,7 @@
 <%
 __this.Defer(function()
 {
-  __this.first().find('.message').hide();
+  //__this.first().find('.message').hide();
   __this.first().find('.close').click(function(){
     __this.first().find('.message').hide();
   });
