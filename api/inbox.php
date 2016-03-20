@@ -1,6 +1,6 @@
 <?php
 
-class threads extends api
+class inbox extends api
 {
   protected function Reserve()
   {
@@ -11,7 +11,7 @@ class threads extends api
     }
     return
     [
-      'design' => 'threads/main',
+      'design' => 'inbox/main',
       'data' => [
         'threads' => $threads,
       ]
@@ -20,10 +20,12 @@ class threads extends api
 
   protected function add($data)
   {
+    session_start();
     if(!empty($data->title) AND !empty($data->members[0])){
       db::Query("INSERT INTO threads (title) VALUES(:title)", [':title' => $data->title]);
       $lastInsertId = db::lastInsertId();
 
+      $data->members[] = $_SESSION['username'];
       foreach ($data->members as $member) {
         $sql_params = [
           ':thread_id' => $lastInsertId,
