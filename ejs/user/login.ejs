@@ -1,22 +1,18 @@
 <div class="ui container">
   <div class="ui"><h2>Login User Page</h2></div>
-
+  <% if(__this.username){ %>
   <div class="ui info message">
     <i class="close icon"></i>
-    <div class="header"></div>
+    <div class="header">You are logged as <%@ __this.username %></div>
   </div>
+  <% } %>
 </div>
+
 <%
 __this.Defer(function(){
-  __this.first().find('.info').hide();
   __this.first().find('.close').click(function(){
-    __this.first().find('.info').hide();
+    $(this).parent().hide()
   });
-  if(__this.username){
-    __this.first().find('.header').html('You are logged as '+__this.username);
-    __this.first().find('.info').show();
-  }
-
-  });
+});
 %>
 <% __this.CascadeDesign('user/login-form',{}); %>
