@@ -1,15 +1,15 @@
 <div class="ui inbox">
   <h2>Threads Page</h2>
-  <div id="add-ico" class="ui icon button add-thread">
-    <i class="add icon"></i>
+  <div class="ui icon thread add button">
+    <i class="plus icon"></i>
   </div>
   <%
     __this.Defer(function(){
-      __this.first().find('#add-ico').click(function(){
-        if($('#add-thread-form').css('display')=="none"){
-          $('#add-thread-form').show();
+      __this.first().find('.add').click(function(){
+        if($('.form').css('display')=="none"){
+          $('.form').show();
         }else{
-          $('#add-thread-form').hide();
+          $('.form').hide();
         }
       });
     });

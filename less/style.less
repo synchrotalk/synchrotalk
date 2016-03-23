@@ -23,7 +23,7 @@
 .inbox h2{
   display:inline-block;
 }
-.inbox .add-thread{
+.inbox .thread.add.button{
   display:inline-block;
   margin-left: 20px;
 }
@@ -33,52 +33,74 @@
 .inbox .messages .message{
   cursor:pointer;
 }
-.ui .add{
+.inbox .form{
   display:none;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 /* END OF INBOX */
 
 
 /* THREAD */
-@t-with: 630px;
-.t-messages{
-  width: @t-with;
+@t-width: 630px;
+
+.thread .with{
+
+}
+.thread .messages{
+  width: @t-width;
   overflow-y: scroll;
   height: 260px;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
 }
-.t-send-message{
+.thread .messages .message{
+  width: 100%;
+  padding: 10px;
+}
+.thread .left.message{
+  float: left;
+  text-align: left;
+}
+.thread .right.message{
+  float: right;
+  text-align: right;
+}
+.thread .send{
   box-sizing: border-box;
   padding: 10px;
-  width: @t-with;
+  width: @t-width;
   border-bottom: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   background-color: rgb(241, 241, 241);
 }
-.t-messages .l-message{
-  float: left;
+.thread .send .form{
   width: 100%;
-  text-align: left;
-  padding: 10px;
 }
-.t-messages .r-message{
-  float: right;
-  width: 100%;
-  text-align: right;
-  padding: 10px;
+.thread .send .input{
+  width: 77%;
 }
-@media (min-width 768px){
-  @t-with: 338px;
 
-  .t-send-message{
-    width: @t-with;
+@media (max-width: 768px){
+  @t-width: 100%;
+
+  .thread .send{
+    width: @t-width;
   }
-  .t-messages{
-    width: @t-with;
+  .thread .messages{
+    width: @t-width;
+  }
+}
+
+@media (max-width: 480px){
+  @t-width: 338px;
+
+  .thread .send{
+    width: @t-width;
+  }
+  .thread .messages{
+    width: @t-width;
   }
 }
 /* END OF THREAD */
