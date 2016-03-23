@@ -1,9 +1,4 @@
 <div class="ui container">
-  <div class="ui hidden success message">
-    <i class="close icon"></i>
-    <div class="header"></div>
-  </div>
-
   <div class="ui action input">
     <input type="text" placeholder="Type your username..." required="">
     <button class="ui button">Login</button>
@@ -12,17 +7,11 @@
 <%
 __this.Defer(function()
 {
-  //__this.first().find('.message').hide();
-  __this.first().find('.close').click(function(){
-    __this.first().find('.message').hide();
-  });
-
   __this.first().find('button').click(function(){
 
     if(__this.first().find('input').val()=="")
     {
-      __this.first().find('.header').html('Username required!');
-      __this.first().find('.message').show();
+      message(['warning', 'Username required!']);
       return;
     }
     var username = __this.first().find('input').val();
