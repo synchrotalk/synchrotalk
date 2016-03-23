@@ -1,4 +1,5 @@
-message = function(data)
+message = function(css, text)
 {
-  phoxy.ApiRequest(['utils/message', data],function(){});
+  debugger;
+  phoxy.ApiRequest(['utils/message', css, text],function(){});
 }
