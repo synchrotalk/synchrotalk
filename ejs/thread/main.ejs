@@ -30,17 +30,15 @@
     phoxy.ApiRequest(['thread/get_messages',__this.t_id, last_id], function(data)
     {
       var new_messages = data.data.get_messages;
-      var new_divs = "";
-      for(k in new_messages){
-        if(new_messages[k]['username']==__this.username){
-          var message = "<div class='message right'><h3>"+new_messages[k]['username']+"</h3><p>"+new_messages[k]['message']+"</p></div>";
-        }else{
-          var message = "<div class='message left'><h3>"+new_messages[k]['username']+"</h3><p>"+new_messages[k]['message']+"</p></div>";
+      if(new_messages[0] !== undefined){
+        for(k in new_messages){
+          new_messages[k]['user'] = __this.username;
+          var new_divs = phoxy.DeferRender('thread/messages', new_messages[k])
+
+          last_id = new_messages[k]['id'];
         }
-        new_divs = new_divs+message;
-        last_id = new_messages[k]['id'];
+        __this.first().find('.messages').html(old_messages+new_divs);
       }
-      __this.first().find('.messages').html(old_messages+new_divs);
       __this.first().find('.messages').scrollTop(1000+last_id);
     });
   }, 1000);
