@@ -1,0 +1,12 @@
+<div class="ui <%@ __this.css %> message">
+  <i class="close icon"></i>
+  <div class="header"><%@ __this.text %></div>
+</div>
+<%
+  __this.Defer(function(){
+    __this.first().find('.close').click(function(){
+      __this.first().hide();
+    });
+
+  });
+%>

@@ -8,6 +8,7 @@ class main extends api
     return
     [
       'design' => 'main/body',
+      'script' => '/js/message.js',
     ];
   }
 
