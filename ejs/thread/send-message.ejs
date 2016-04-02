@@ -15,7 +15,7 @@ __this.Defer(function(){
   __this.first().find('button').click(function(){
     var message = __this.first().find('input').val();
       if(message!==""){
-        phoxy.ApiRequest(['thread/add_message', __this.t_id, __this.username, message], function()
+        phoxy.ApiRequest(['thread/add_message', __this.t_id, __this.username, message, __this.members], function()
         {
           __this.first().find('input').val('');
         });

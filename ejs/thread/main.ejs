@@ -1,3 +1,6 @@
+<%
+  thread.ejsThread = __this;
+%>
 <div class="ui container thread">
   <h2 class="with">Thread with: </h2>
   <div class="messages">
@@ -7,41 +10,23 @@
       __this.messages[n]['user'] = __this.username;
       __this.CascadeDesign('thread/messages', __this.messages[n]);
     }
+    //messages from event
+    thread.ejsThread.onEvent = function(message, first){
+      var new_divs = phoxy.DeferRender('thread/messages', message);
+      first.find('.messages').append(new_divs);
+      first.find('.messages').scrollTop(1000);
+    }
   %>
   </div>
 
   <%
-    var sdata = {username:__this.username, t_id:__this.t_id};
+    var sdata = {username:__this.username, t_id:__this.t_id, members:__this.members};
     __this.CascadeDesign('thread/send-message',sdata);
   %>
 
 </div>
 
 <%
-  //message updater
-  if(__this.messages[0])
-    last_id = __this.messages[__this.messages.length - 1]['id'];
-  else
-    last_id = 0;
-
-  setInterval(function(){
-    var old_messages = __this.first().find('.messages').html();
-
-    phoxy.ApiRequest(['thread/get_messages',__this.t_id, last_id], function(data)
-    {
-      var new_messages = data.data.get_messages;
-      if(new_messages[0] !== undefined){
-        for(k in new_messages){
-          new_messages[k]['user'] = __this.username;
-          var new_divs = phoxy.DeferRender('thread/messages', new_messages[k])
-
-          last_id = new_messages[k]['id'];
-        }
-        __this.first().find('.messages').html(old_messages+new_divs);
-      }
-      __this.first().find('.messages').scrollTop(1000+last_id);
-    });
-  }, 1000);
 
   //theard members
   __this.Defer(function(){
