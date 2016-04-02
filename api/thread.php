@@ -20,6 +20,7 @@ class thread extends api
         'username' => $_SESSION['username'],
         't_id' => $t_id,
       ],
+      'script' => '/js/thread.js',
     ];
   }
 
@@ -37,7 +38,7 @@ class thread extends api
     return $res;
   }
 
-  protected function add_message($t_id, $username, $message)
+  protected function add_message($t_id, $username, $message, $members)
   {
     if($message!=="")
     {
@@ -47,6 +48,23 @@ class thread extends api
         ':message' => $message,
       ];
       $res = db::Query("INSERT INTO thread_messages (thread_id, username, message) VALUES (:t_id, :username, :message)", $s_params);
+      //send event
+      $lastInsertId = db::lastInsertId();
+      $this->pack_message($t_id, $members, $message, $username, $lastInsertId);
+    }
+  }
+
+  protected function pack_message($t_id, $members, $message, $username, $lastInsertId)
+  {
+    $event_data = [
+      'thread_id' => $t_id,
+      'messsage_id' => $lastInsertId,
+      'message' => $message,
+      'username' => $username,
+    ];
+
+    foreach ($members as $member) {
+      phoxy::Load('event')->add_event($member->username, $event_data, 'thread');
     }
   }
 

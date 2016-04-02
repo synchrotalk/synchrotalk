@@ -14,7 +14,7 @@ class inbox extends api
       'design' => 'inbox/main',
       'data' => [
         'threads' => $threads,
-      ]
+      ],
     ];
   }
 
