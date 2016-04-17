@@ -74,7 +74,7 @@ class thread extends api
     $this->emmit_event($thread_id, $members, $message, $username, db::AffectedID());
   }
 
-  protected function emmit_event($thread_id, $members, $message, $username, $lastInsertId)
+  private function emmit_event($thread_id, $members, $message, $username, $lastInsertId)
   {
     $event_data =
     [

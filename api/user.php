@@ -6,7 +6,7 @@ class user extends api
   {
     return
     [
-      'design' => 'user/main',
+      'design' => 'user/login',
     ];
   }
 
