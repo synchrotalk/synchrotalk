@@ -8,7 +8,10 @@ class main extends api
     return
     [
       'design' => 'main/body',
-      'script' => '/js/event.js',
+      'script' =>
+      [
+        '/js/event.js',
+      ]
     ];
   }
 

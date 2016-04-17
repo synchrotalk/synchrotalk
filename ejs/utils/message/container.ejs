@@ -1,0 +1,10 @@
+<div class='message container'>
+</div>
+
+<%
+window.message = function(type, text)
+{
+  var popup = phoxy.DeferRender('utils/message', {css: type, text: text});
+  __this.first().append(popup);
+}
+%>
