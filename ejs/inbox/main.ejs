@@ -1,28 +1,28 @@
-<div class="ui inbox">
-  <h2>Threads Page</h2>
-  <div class="ui icon thread add button">
+<div class="inbox">
+  <h2>Inbox</h2>
+  <div class="ui button thread add">
     <i class="plus icon"></i>
   </div>
-  <%
-    __this.Defer(function(){
-      __this.first().find('.add').click(function(){
-        if($('.form').css('display')=="none"){
-          $('.form').show();
-        }else{
-          $('.form').hide();
-        }
-      });
-    });
-  %>
-  <% __this.CascadeDesign('inbox/add-thread-form',{}); %>
+
+  <% __this.CascadeDesign('inbox/add-thread-form', {}); %>
+
   <div class="ui container messages">
-  <%
-
-    for (var n in __this.threads){
-      __this.CascadeDesign('inbox/message', __this.threads[n]);
-    }
-
-  %>
+    <%
+      for (var n in __this.threads)
+        __this.CascadeDesign('inbox/message', __this.threads[n]);
+    %>
   </div>
-
 </div>
+
+<%
+  __this.Defer(function()
+  {
+    __this.first().find('.add').click(function()
+    {
+      if ($('.form').css('display') == "none")
+        $('.form').show();
+      else
+        $('.form').hide();
+    });
+  });
+%>

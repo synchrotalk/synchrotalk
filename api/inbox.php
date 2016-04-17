@@ -4,16 +4,12 @@ class inbox extends api
 {
   protected function Reserve()
   {
-    session_start();
-    if(isset($_SESSION['username']))
-      $threads = $this->get_all_user_threads($_SESSION['username']);
-
     return
     [
       'design' => 'inbox/main',
       'data' =>
       [
-        'threads' => $threads,
+        'threads' => $this->get_all_user_threads(),
       ],
     ];
   }
@@ -45,8 +41,11 @@ class inbox extends api
     return $lastInsertId;
   }
 
-  protected function get_all_user_threads($username)
+  public function get_all_user_threads($username = null)
   {
+    if (is_null($username))
+      $username = phoxy::Load('user')->MyName();
+
     $sql = "SELECT threads.* FROM threads ";
     $sql .= "INNER JOIN thread_users ";
     $sql .= "ON threads.id=thread_users.thread_id ";

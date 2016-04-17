@@ -22,9 +22,8 @@ class user extends api
   {
     phoxy_protected_assert(strlen($username) > 3, "Minimum username length is 3 characters");
 
-    $storage = &$this->GetSessionStorage();
-
-    $storage['username'] = $username;
+    $my_name = &$this->username();
+    $my_name = $username;
 
     return
     [
@@ -33,5 +32,17 @@ class user extends api
         'login' => true,
       ],
     ];
+  }
+
+  private function username()
+  {
+    return $this->GetSessionStorage()['username'];
+  }
+
+  public function MyName()
+  {
+    $ret =  $this->username();
+    phoxy_protected_assert($ret, "Login required to proceed");
+    return $ret;
   }
 }
