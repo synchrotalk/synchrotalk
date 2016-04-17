@@ -14,7 +14,7 @@ class inbox extends api
     ];
   }
 
-  protected function add($data)
+  protected function add($title, $members)
   {
     session_start();
     if(empty($data->title) || empty($data->members[0]))

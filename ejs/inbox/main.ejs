@@ -17,12 +17,9 @@
 <%
   __this.Defer(function()
   {
-    __this.first().find('.add').click(function()
+    __this.first().find('.thread.add').click(function()
     {
-      if ($('.form').css('display') == "none")
-        $('.form').show();
-      else
-        $('.form').hide();
+      __this.first().find('.modal').modal('show');
     });
   });
 %>
