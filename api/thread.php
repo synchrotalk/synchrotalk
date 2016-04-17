@@ -54,28 +54,21 @@ class thread extends api
     return $res;
   }
 
-  protected function add_message($thread_id, $username, $message, $members)
+  protected function add_message($thread_id, $message)
   {
-    if($message == "")
-      return
-      [
-        "error" => "You trying send empty message",
-      ];
+    phoxy_protected_assert(!empty($message), "Unable to send empty message");
 
-    $params =
-    [
-      ':t_id' => $t_id,
-      ':username' => $username,
-      ':message' => $message,
-    ];
+    $transact = db::Begin();
 
-    $res = db::Query("INSERT INTO thread_messages (thread_id, username, message) VALUES (:t_id, :username, :message)", $params);
-    //send event
-    $this->emmit_event($thread_id, $members, $message, $username, db::AffectedID());
+    $message_id = phoxy::Load('message')->add($thread_id, $message);
+    $this->EmmitEvent("new_message", $message_id);
+
+    phoxy_protected_assert(db::Commit(), "Failure at message send");
   }
 
-  private function emmit_event($thread_id, $members, $message, $username, $lastInsertId)
+  private function EmmitEvent($type, $thread_id)
   {
+    // TODO
     $event_data =
     [
       'thread_id' => $thread_id,
@@ -137,7 +130,7 @@ class thread extends api
     foreach ($data->members as $member)
       $this->AppendUser($room_id, $member);
 
-    phoxy_protected_assert($transact->Commit(), "DB denial at room create");
+    phoxy_protected_assert($transact->Commit(), "Unable to save room");
     return $room_id;
   }
 
