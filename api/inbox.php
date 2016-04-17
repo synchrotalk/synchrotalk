@@ -4,12 +4,14 @@ class inbox extends api
 {
   protected function Reserve()
   {
+    $inbox = $this->fork()->brief_inbox();
+
     return
     [
       'design' => 'inbox/main',
       'data' =>
       [
-        'threads' => $this->get_all_user_threads(),
+        'threads' => $inbox,
       ],
     ];
   }
@@ -41,19 +43,20 @@ class inbox extends api
     return $lastInsertId;
   }
 
-  public function get_all_user_threads($username = null)
+  protected function brief_inbox()
   {
-    if (is_null($username))
-      $username = phoxy::Load('user')->MyName();
+    $threads = phoxy::Load('thread')->FindByUser();
 
-    $sql = "SELECT threads.* FROM threads ";
-    $sql .= "INNER JOIN thread_users ";
-    $sql .= "ON threads.id=thread_users.thread_id ";
-    $sql .= "WHERE thread_users.username = :username ";
-    $sql .= "ORDER BY threads.id ";
+    $ret = [];
+    foreach ($threads as $thread)
+      $ret[] = phoxy::Load('thread')->info($thread);
 
-    $threads = db::Query($sql, [':username' => $username]);
-    return $threads;
+    return
+    [
+      "data" =>
+      [
+        "inbox" => $ret,
+      ]
+    ];
   }
-
 }

@@ -88,4 +88,33 @@ class thread extends api
       phoxy::Load('event')->add_event($member->username, $event_data, 'thread');
   }
 
+  public function FindByUser($username = null)
+  {
+    if (is_null($username))
+      $username = phoxy::Load('user')->MyName();
+
+    $sql =
+      "SELECT *
+        FROM thread_users
+        WHERE username = :username
+      ";
+
+    $threads = db::Query($sql, [':username' => $username]);
+
+    $ret = [];
+    foreach ($threads as $thread)
+      $ret[] = $thread['id'];
+
+    return $ret;
+  }
+
+  public function Info($thread)
+  {
+    $sql =
+      "SELECT *
+        FROM threads
+        WHERE id=:id";
+
+    return db::Query($sql, [':id' => $thread], true);
+  }
 }
