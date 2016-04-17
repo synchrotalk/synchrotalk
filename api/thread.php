@@ -117,4 +117,43 @@ class thread extends api
 
     return db::Query($sql, [':id' => $thread], true);
   }
+
+  public function Create($title, $members)
+  {
+    phoxy_protected_assert(!empty($title), "Cant create room without title");
+    phoxy_protected_assert(is_array($members) && count($members), "Cant create room without recepient");
+
+    $members[] = phoxy::Load('user')->MyName();
+
+    $transact = db::Begin();
+
+    db::Query("INSERT INTO threads (title) VALUES(:title)",
+      [
+        ':title' => $data->title,
+      ]);
+
+    $room_id = db::AffectedID();
+
+    foreach ($data->members as $member)
+      $this->AppendUser($room_id, $member);
+
+    phoxy_protected_assert($transact->Commit(), "DB denial at room create");
+    return $room_id;
+  }
+
+  private function AppendUser($room, $user)
+  {
+    db::Query(
+      "INSERT INTO thread_users
+        (thread_id, username)
+        VALUES (:thread_id, :username)
+      "
+      ,
+      [
+        ':thread_id' => $room,
+        ':username' => $user,
+      ]);
+
+    return db::AffectedID();
+  }
 }

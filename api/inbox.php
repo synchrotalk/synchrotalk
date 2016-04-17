@@ -18,29 +18,7 @@ class inbox extends api
 
   protected function add($title, $members)
   {
-    session_start();
-    if(empty($data->title) || empty($data->members[0]))
-      return false;
-
-    $data->members[] = $_SESSION['username'];
-
-    db::Query("INSERT INTO threads (title) VALUES(:title)",
-      [
-        ':title' => $data->title,
-      ]);
-
-    $sql_params =
-    [
-      ':thread_id' => db::AffectedID(),
-    ];
-
-    foreach ($data->members as $member)
-    {
-      $sql_params[':username'] = $member;
-      db::Query("INSERT INTO thread_users (thread_id, username) VALUES(:thread_id, :username)", $sql_params);
-    }
-
-    return $lastInsertId;
+    return phoxy::Load('thread')->Create($title, $members);
   }
 
   protected function brief_inbox()
