@@ -1,11 +1,13 @@
-<div class='message container'>
+<div class='notices ancor'>
+  <div class='notices container'>
+  </div>
 </div>
 
 <%
 window.message = function(type, text)
 {
   var popup = phoxy.DeferRender('utils/message', {css: type, text: text}, InitSelfDestructMechanism);
-  __this.first().prepend(popup);
+  __this.first().find('.notices.container').prepend(popup);
 }
 
 var showing_messages = [];
@@ -13,6 +15,9 @@ var clock_running = null;
 
 function InitSelfDestructMechanism()
 {
+  if (showing_messages.length == 0)
+    __this.first().show();
+
   showing_messages.push(this.first());
   start_clock();
 }
@@ -24,6 +29,8 @@ function start_clock()
 
   if (!showing_messages.length)
     return;
+
+  showing_messages[0].transition('fly down');
 
   phoxy.Defer(calculate_tick, 3000);
   clock_running = true;
@@ -43,11 +50,21 @@ function gracefully_remove(message)
 {
   message.transition(
     {
-      animation: 'fade up',
+      animation: 'fade left',
       onComplete: function()
       {
         message.remove();
+
+        if (showing_messages.length == 0)
+          __this.first().hide();
       }
     })
 }
+
+
+
+__this.Defer(function()
+{
+  __this.first().hide()
+});
 %>
