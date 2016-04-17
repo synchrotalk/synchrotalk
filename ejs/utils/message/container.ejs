@@ -4,7 +4,50 @@
 <%
 window.message = function(type, text)
 {
-  var popup = phoxy.DeferRender('utils/message', {css: type, text: text});
-  __this.first().append(popup);
+  var popup = phoxy.DeferRender('utils/message', {css: type, text: text}, InitSelfDestructMechanism);
+  __this.first().prepend(popup);
+}
+
+var showing_messages = [];
+var clock_running = null;
+
+function InitSelfDestructMechanism()
+{
+  showing_messages.push(this.first());
+  start_clock();
+}
+
+function start_clock()
+{
+  if (clock_running)
+    return;
+
+  if (!showing_messages.length)
+    return;
+
+  phoxy.Defer(calculate_tick, 3000);
+  clock_running = true;
+}
+
+function calculate_tick()
+{
+  clock_running = false;
+
+  var first_message = showing_messages.shift();
+  gracefully_remove(first_message);
+
+  start_clock();
+}
+
+function gracefully_remove(message)
+{
+  message.transition(
+    {
+      animation: 'fade up',
+      onComplete: function()
+      {
+        message.remove();
+      }
+    })
 }
 %>
