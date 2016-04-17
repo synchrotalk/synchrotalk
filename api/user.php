@@ -10,34 +10,28 @@ class user extends api
     ];
   }
 
-  protected function login($username = null)
+  public function GetSessionStorage()
   {
-    session_start();
+    if (session_status() != PHP_SESSION_ACTIVE)
+      session_start();
 
-    $login = false;
-    if (!is_null($username))
-    {
-      $_SESSION['username'] = $username;
-      $login = true;
-    }
+    return $_SESSION;
+  }
+
+  protected function login($username)
+  {
+    phoxy_protected_assert(strlen($username) > 3, "Minimum username length is 3 characters");
+
+    $storage = &$this->GetSessionStorage();
+
+    $storage['username'] = $username;
 
     return
     [
-      'design' => 'user/login',
       'data' =>
       [
-        'login' => $login,
-        'username' => $this->GetUserName(),
+        'login' => true,
       ],
     ];
   }
-
-  protected function GetUserName()
-  {
-    if(isset($_SESSION['username']))
-      return $_SESSION['username'];
-
-    return false;
-  }
-
 }

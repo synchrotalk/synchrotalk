@@ -34,6 +34,7 @@ phoxy_return_worker::$add_hook_cb = function($that)
     $that->obj['cache'] = 'no';
 };
 
+error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 phpsql\OneLineConfig(conf()->db->connection_string);
 
 include('phoxy/load.php');
