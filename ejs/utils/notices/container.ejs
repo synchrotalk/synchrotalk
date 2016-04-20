@@ -6,7 +6,7 @@
 <%
 window.message = function(type, text)
 {
-  var popup = phoxy.DeferRender('utils/message', {css: type, text: text}, InitSelfDestructMechanism);
+  var popup = phoxy.DeferRender('utils/notices/notice', {css: type, text: text}, InitSelfDestructMechanism);
   __this.first().find('.notices.container').prepend(popup);
 }
 
