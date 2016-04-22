@@ -18,31 +18,30 @@ class user extends api
     return $_SESSION;
   }
 
-  protected function login($username)
+  private function login()
   {
-    phoxy_protected_assert(strlen($username) > 3, "Minimum username length is 3 characters");
+    db::Query("INSERT INTO users VALUES ()");
 
-    $my_name = &$this->username();
-    $my_name = $username;
+    $uid = db::AffectedID();
 
-    return
-    [
-      'data' =>
-      [
-        'login' => true,
-      ],
-    ];
+    $my_name = &$this->get_uid();
+    $my_name = $uid;
   }
 
-  private function username()
+  private function get_uid()
   {
     return $this->GetSessionStorage()['username'];
   }
 
-  public function MyName()
+  private function is_logined()
   {
-    $ret =  $this->username();
-    phoxy_protected_assert($ret, "Login required to proceed");
-    return $ret;
+    return null == $this->get_uid();
+  }
+
+  public function uid()
+  {
+    if (!$this->is_logined())
+      $this->login();
+    return $this->get_uid();
   }
 }
