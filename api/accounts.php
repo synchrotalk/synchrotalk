@@ -10,14 +10,11 @@ class accounts extends api
     ];
   }
 
-  protected function supported()
+  protected function add()
   {
     return
     [
-      "data" =>
-      [
-        "supported" => db::Query("SELECT * FROM connector_plugins"),
-      ],
+      "design" => "accounts/add/page",
     ];
   }
 
