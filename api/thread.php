@@ -127,7 +127,7 @@ class thread extends api
 
     $room_id = db::AffectedID();
 
-    foreach ($data->members as $member)
+    foreach ($members as $member)
       $this->AppendUser($room_id, $member);
 
     phoxy_protected_assert($transact->Commit(), "Unable to save room");

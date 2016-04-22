@@ -1,6 +1,23 @@
-<% __this.CascadeDesign('main/head',{}) %>
 <div class='ui main container'>
   <% __this.CascadeDesign('utils/notices/container', {}) %>
   <div id='canvas'>
   </div>
 </div>
+
+<%
+var head_params =
+{
+  'scripts' :
+  [
+    "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.0/semantic.min.js"
+  ]
+  ,
+  'css' :
+  [
+    "/less",
+    "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.0/semantic.min.css",
+  ]
+};
+
+__this.CascadeDesign('snippets/head', head_params);
+%>

@@ -37,4 +37,11 @@ phoxy_return_worker::$add_hook_cb = function($that)
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 phpsql\OneLineConfig(conf()->db->connection_string);
 
-include('phoxy/load.php');
+try
+{
+  include('phoxy/load.php');
+} catch (Exception $e)
+{
+  $message = ["error" => $e->getMessage()];
+  die (json_encode($message, true));
+}
