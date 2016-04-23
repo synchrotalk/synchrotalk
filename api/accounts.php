@@ -18,18 +18,20 @@ class accounts extends api
     ];
   }
 
-  protected function itemize()
+  public function connected()
   {
     $uid = phoxy::Load('user')->uid();
+    return db::Query("SELECT * FROM connections WHERE uid=$1", [$uid]);
+  }
 
-    $nets = db::Query("SELECT * FROM connections WHERE uid=$1", [$uid]);
-
+  protected function itemize()
+  {
     return
     [
       "design" => "accounts/list",
       "data" =>
       [
-        "accounts" => $nets,
+        "accounts" => $this->connected(),
       ],
     ];
   }

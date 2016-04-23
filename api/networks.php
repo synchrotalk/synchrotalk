@@ -14,7 +14,7 @@ class networks extends api
     ];
   }
 
-  private function get_network_object($name)
+  public function get_network_object($name)
   {
     return $this->hub()->$name;
   }
