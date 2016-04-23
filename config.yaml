@@ -3,3 +3,5 @@ db:
 plugins:
   root_path: networks
   lib_path: plugin
+networks:
+  icons:

@@ -9,9 +9,26 @@ class networks extends api
       "design" => "networks/list",
       "data" =>
       [
-        "supported" => conf()->plugins->available,
+        "networks" => conf()->plugins->available,
       ],
     ];
+  }
+
+  protected function icon($name)
+  {
+    return
+    [
+      "design" => "networks/icon",
+      "data" =>
+      [
+        "icon" => conf()->networks->icons->$name,
+      ],
+    ];
+  }
+
+  public function __get($name)
+  {
+    return $this->get_network_object($name);
   }
 
   public function get_network_object($name)
