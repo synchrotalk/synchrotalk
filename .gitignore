@@ -3,3 +3,4 @@ phoxy
 composer.lock
 secret.yaml
 plugins
+networks
