@@ -20,8 +20,11 @@ class accounts extends api
 
   protected function add($network, $login, $password)
   {
-    $storage = &phoxy::Load('user')->GetSessionStorage();
-    $accounts = &$storage['accounts'];
+    $storage_functor = phoxy::Load('user')->StorageShortcut();
+    $accounts = &$storage_functor()['accounts'];
+
+    if (!is_array($accounts))
+      $accounts = [];
 
     phoxy_protected_assert(!isset($accounts[$network]), "In demo mode one account per social network");
 

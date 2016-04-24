@@ -10,7 +10,15 @@ class user extends api
     ];
   }
 
-  public function GetSessionStorage()
+  public function StorageShortcut()
+  {
+    return function &()
+    {
+      return $this->GetSessionStorage();
+    };
+  }
+
+  public function &GetSessionStorage()
   {
     if (session_status() != PHP_SESSION_ACTIVE)
       session_start();
