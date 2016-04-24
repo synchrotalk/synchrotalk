@@ -32,7 +32,7 @@ class accounts extends api
     $insta = $networks->get_network_object($network);
 
     $user = $insta->log_in($login, $password);
-    phoxy_protected_assert(!is_null($user), "Login/password invalid");
+    phoxy_protected_assert($user, "Login/password invalid");
 
     $accounts[$network] =
     [
@@ -40,7 +40,11 @@ class accounts extends api
       "password" => $password,
     ];
 
-    return "success";
+    return
+    [
+      "design" => "accounts/create/welcome",
+      "data" => $user,
+    ];
   }
 
   public function connected()

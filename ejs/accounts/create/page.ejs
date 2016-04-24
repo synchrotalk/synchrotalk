@@ -22,10 +22,9 @@ __this.Defer(function()
     if (form.login.length < 3 || form.password.length < 3)
       return message('warning', 'Please fill login/password correctly');
 
-    debugger;
     phoxy.ApiRequest(['accounts/add', net, form.login, form.password], function(res)
     {
-
+      phoxy.MenuCall('inbox');
     });
   });
 });
