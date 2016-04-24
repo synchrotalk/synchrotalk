@@ -2,8 +2,13 @@
 
 class networks extends api
 {
-  protected function supported()
+  protected function supported($name = null)
   {
+    $plugins = conf()->plugins->available->__2array();
+
+    if (!is_null($name))
+      return in_array($name, $plugins);
+
     return
     [
       "design" => "networks/list",
@@ -12,7 +17,7 @@ class networks extends api
         "networks" => array_map(function($plugin)
         {
           return['name' => $plugin];
-        }, conf()->plugins->available->__2array()),
+        }, $plugins),
       ],
     ];
   }
