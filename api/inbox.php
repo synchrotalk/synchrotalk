@@ -10,6 +10,15 @@ class inbox extends api
     ];
   }
 
+  private function MarkWithNetwork($network, $inbox)
+  {
+    return array_map(function($thread) use ($network)
+    {
+      $thread['network'] = $network;
+      return $thread;
+    }, $inbox);
+  }
+
   protected function itemize()
   {
     $accounts = phoxy::Load('accounts')->connected();
@@ -20,14 +29,16 @@ class inbox extends api
     if (!count($inbox))
     foreach ($accounts as $network => $account)
     {
-      $network = $networks->get_network_object($network);
-      $login = $network->log_in($account['login'], $account['password']);
+      $connection = $networks->get_network_object($network);
+      $login = $connection->log_in($account['login'], $account['password']);
 
-      $threads = $network->threads();
-      $inbox = array_merge(
+      $threads = $connection->threads();
+      $inbox = array_merge
+      (
         $inbox
-        , $threads['requests']
-        , $threads['inbox']['threads']);
+        , $this->MarkWithNetwork($network, $threads['requests'])
+        , $this->MarkWithNetwork($network, $threads['inbox']['threads'])
+      );
     }
     $_SESSION['inbox'] = $inbox;
 

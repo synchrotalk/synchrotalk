@@ -1,14 +1,17 @@
 <tr>
-  <td>
+  <td class='collapsing'>
     <h4 class="ui image header">
       <% __this.CascadeDesign('thread/users/one.image', __this.users[0]) %>
       <div class="content">
         <%@ __this.title %>
         <div class="sub header">
-        <% __this.CascadeDesign('thread/items/one', __this.items[0]) %>
+          <%@ __this.network %>
         </div>
       </div>
     </h4>
+  </td>
+  <td>
+    <% __this.CascadeDesign('thread/items/one', __this.items[0]) %>
   </td>
 </tr>
 
