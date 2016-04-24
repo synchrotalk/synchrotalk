@@ -27,11 +27,12 @@ class accounts extends api
 
     $networks = phoxy::Load('networks');
 
-    $supported = $networks->supported()->__2array();
-    phoxy_protected_assert(in_array($network, $supported['networks']), "Social network unsupported");
+    phoxy_protected_assert($networks->supported($network), "Social network unsupported");
 
-    $res = $networks->$network->log_in($login, $password);
-    phoxy_protected_assert(!is_null($res), "Login/password invalid");
+    $insta = $networks->get_network_object($network);
+
+    $user = $insta->log_in($login, $password);
+    phoxy_protected_assert(!is_null($user), "Login/password invalid");
 
     $accounts[$network] =
     [
