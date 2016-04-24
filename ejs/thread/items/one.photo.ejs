@@ -1,5 +1,10 @@
 <%
-console.log("IMAGE", __this);
-return;
+var url;
+
+if (typeof __this.url != 'unfedined')
+  url = __this.url;
+else
+  url = __this.candidates[0].url;
 %>
-<img class="ui tiny image" src="">
+
+<img class="ui mini image" src="<%@ url %>">
