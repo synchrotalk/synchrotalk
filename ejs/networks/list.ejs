@@ -1,6 +1,12 @@
+<div>
+<% __this.ForeachDesign("networks/list.entry", __this.networks) %>
+</div>
 <%
-
-for (var k in __this.networks)
-  __this.CascadeDesign("networks/list.entry", {name: __this.networks[k]})
-
+__this.DeferCascade(function()
+{
+  __this.first().children().on('network.choose', function(e, network)
+  {
+    __this.first().trigger('network.choose', network);
+  });
+});
 %>

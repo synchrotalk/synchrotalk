@@ -1,0 +1,13 @@
+<div class='network choose'>
+  <% __this.CascadeRequest('networks/supported') %>
+</div>
+
+<%
+__this.DeferCascade(function()
+{
+  __this.first().on('network.choose', function(e, network)
+  {
+    phoxy.MenuCall(['accounts/create', network]);
+  });
+});
+%>

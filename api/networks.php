@@ -9,7 +9,10 @@ class networks extends api
       "design" => "networks/list",
       "data" =>
       [
-        "networks" => conf()->plugins->available,
+        "networks" => array_map(function($plugin)
+        {
+          return['name' => $plugin];
+        }, conf()->plugins->available->__2array()),
       ],
     ];
   }

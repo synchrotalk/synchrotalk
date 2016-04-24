@@ -1,3 +1,19 @@
-<%@ __this.name %>
+<div class='list entry networks'>
+  <span class='image'>
+    <% __this.CascadeDesign('networks/icon.by.name', __this) %>
+  </span>
+  <span class='name'>
+    <%@ __this.name %>
+  </span>
+</div>
 
-<% __this.CascadeDesign('networks/icon.by.name', __this) %>
+<%
+__this.Defer(function()
+{
+  __this.first().click(function()
+  {
+    __this.first().trigger('network.choose', __this.name);
+  });
+});
+%>
+
