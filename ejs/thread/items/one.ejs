@@ -1,0 +1,15 @@
+<%
+var supported =
+[
+  'text',
+  'like',
+  'photo',
+  'media',
+];
+
+var index = supported.indexOf(__this.type);
+
+if (index != -1)
+  return __this.CascadeDesign('thread/items/one.' + __this.type, __this);
+%>
+MEDIA TYPE <%@ __this.type %> UNSUPPORTED

@@ -39,6 +39,7 @@ class accounts extends api
 
     $accounts[$network] =
     [
+      "network" => $network,
       "login" => $login,
       "password" => $password,
     ];
@@ -52,8 +53,7 @@ class accounts extends api
 
   public function connected()
   {
-    $uid = phoxy::Load('user')->uid();
-    return db::Query("SELECT * FROM connections WHERE uid=$1", [$uid]);
+    return phoxy::Load('user')->GetSessionStorage()['accounts'];
   }
 
   protected function itemize()
