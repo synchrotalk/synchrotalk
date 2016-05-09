@@ -18,6 +18,22 @@ class accounts extends api
     ];
   }
 
+  protected function grant_demo_access()
+  {
+    return $this->add(
+      conf()->demo->network,
+      conf()->demo->login,
+      conf()->demo->password
+      );
+  }
+
+  protected function revoke_demo_access()
+  {
+    $storage_functor = phoxy::Load('user')->StorageShortcut();
+    $accounts = &$storage_functor()['accounts'];
+    $accounts = [];
+  }
+
   protected function add($network, $login, $password)
   {
     $storage_functor = phoxy::Load('user')->StorageShortcut();
