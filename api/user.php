@@ -26,6 +26,12 @@ class user extends api
     return $_SESSION;
   }
 
+  public function ResetSession()
+  {
+    $this->GetSessionStorage();
+    session_destroy();
+  }
+
   private function login()
   {
     db::Query("INSERT INTO users VALUES ()");

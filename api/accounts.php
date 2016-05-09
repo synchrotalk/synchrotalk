@@ -20,6 +20,7 @@ class accounts extends api
 
   protected function grant_demo_access()
   {
+    $this->revoke_demo_access();
     return $this->add(
       conf()->demo->network,
       conf()->demo->login,
@@ -63,7 +64,11 @@ class accounts extends api
     return
     [
       "design" => "accounts/create/welcome",
-      "data" => $user,
+      "data" =>
+      [
+        'user' => $user,
+        'next' => 'inbox',
+      ],
     ];
   }
 
