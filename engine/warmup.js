@@ -25,7 +25,11 @@ var warmup_obj =
           || data["error"] === "Unexpected RPC call (Module handler not found)")
       {
         $('.removeafterload').remove();
-        return phoxy.ApiRequest("utils/page404");
+
+        if (typeof message != 'function')
+          return phoxy.ApiRequest("utils/page404");
+
+        return message('error', 'Some requests are failed');
       }
       return arguments.callee.origin.apply(this, arguments);
     })
