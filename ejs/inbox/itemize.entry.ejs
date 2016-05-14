@@ -1,4 +1,4 @@
-<tr>
+<tr id='<%@ __this.id %>'>
   <td class='collapsing'>
     <h4 class="ui image header">
       <% __this.CascadeDesign('thread/users/one.image', __this.users[0]) %>
@@ -14,4 +14,14 @@
     <% __this.CascadeDesign('thread/items/one', __this.items[0]) %>
   </td>
 </tr>
+
+<%
+__this.Defer(function()
+{
+  __this.first().click(function()
+  {
+    phoxy.MenuCall(['thread', $(this).attr('id')]);
+  });
+});
+%>
 
