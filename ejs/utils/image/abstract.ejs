@@ -1,0 +1,10 @@
+<%
+var url;
+
+if (typeof __this.url != 'undefined')
+  url = __this.url;
+else
+  url = __this.candidates[0].url;
+%>
+
+<img class="<%@ __this.classes %>" src="<%@ url %>">
