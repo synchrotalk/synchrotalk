@@ -1,10 +1,9 @@
 <%
-var url;
-
-if (typeof __this.url != 'undefined')
-  url = __this.url;
-else
-  url = __this.candidates[0].url;
+__this.CascadeDesign('utils/image/mini', __this, function()
+{
+  this.first().click(function()
+  {
+    $('body').append(phoxy.DeferRender('utils/modal/image', __this));
+  });
+});
 %>
-
-<img class="ui mini image" src="<%@ url %>">

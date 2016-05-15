@@ -1,0 +1,19 @@
+<div class="ui basic modal">
+  <% __this.CascadeDesign.apply(__this, __this.data) %>
+</div>
+
+<%
+__this.DeferCascade(function()
+{
+  __this.first()
+    .modal(
+    {
+      duration: 200,
+      onHidden: function()
+      {
+        __this.first().remove();
+      }
+    })
+    .modal('show');
+});
+%>
