@@ -1,0 +1,11 @@
+<div>
+<% __this.CascadeDesign('accounts/create/network.choose', {}) %>
+</div>
+
+
+<%
+__this.DeferCascade(function()
+{
+  __this.first().find('.list.entry:first-child').click();
+});
+%>

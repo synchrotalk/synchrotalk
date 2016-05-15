@@ -1,2 +1,11 @@
 db:
-  connection_string: mysql://user:password@host/database 
+  connection_string: mysql://user:password@host/database
+plugins:
+  root_path: networks
+  lib_path: plugin
+networks:
+  icons:
+demo:
+  instagram:
+  login:
+  password:

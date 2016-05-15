@@ -1,0 +1,41 @@
+<div class="ui fluid icon input">
+  <textarea class='ui input'></textarea>
+  <i class="send outline link icon"></i>
+</div>
+
+<%
+function Send(target)
+{
+  var target = $(target);
+
+  target.trigger('send.text', target.val().trim());
+  target.val('');
+}
+
+__this.Defer(function()
+{
+  var textarea = __this.first().find('textarea');
+
+  textarea
+    .on('keydown keyup', function()
+  {
+    textarea.height("5px");
+    var height = textarea.prop('scrollHeight');
+
+    textarea.height(height + 'px');
+
+  })
+    .on('keyup', function(e)
+  {
+    if (e.which != 13)
+      return;
+
+    Send(e.target);
+  });
+
+  __this.first().find('.link.icon').click(function()
+  {
+    Send(textarea);
+  });
+});
+%>

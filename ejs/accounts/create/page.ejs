@@ -1,0 +1,30 @@
+<div class="create account">
+  <h1 class="ui header">Supported networks</h1>
+  <% __this.CascadeDesign("accounts/create/network.choose") %>
+  <% __this.CascadeDesign("accounts/create/form") %>
+</div>
+
+<%
+__this.Defer(function()
+{
+  var net;
+
+  __this.first().on('network.choose', function(e, network)
+  {
+    net = network;
+  });
+
+  __this.first().on('login.submit', function(e, form)
+  {
+    if (typeof net == 'undefined')
+      return message('warning', 'You must choose network first');
+
+    if (form.login.length < 3 || form.password.length < 3)
+      return message('warning', 'Please fill login/password correctly');
+
+    phoxy.ApiRequest(['accounts/add', net, form.login, form.password], function(res)
+    {
+    });
+  });
+});
+%>

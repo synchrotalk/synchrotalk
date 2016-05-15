@@ -1,0 +1,18 @@
+<div>
+  <% __this.CascadeRequest('networks/supported') %>
+</div>
+
+<%
+__this.DeferCascade(function()
+{
+  __this.first().on('network.choose', function(e, network)
+  {
+    $(this).find('.choosed').each(function()
+    {
+      $(this).removeClass('choosed');
+    });
+
+    $(e.target).addClass('choosed');
+  });
+});
+%>

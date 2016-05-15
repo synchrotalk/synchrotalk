@@ -1,0 +1,27 @@
+<div class='chatbox'>
+<% __this.CascadeDesign('thread/chatbox/itemize', __this) %>
+<% __this.CascadeDesign('thread/chatbox/updates', __this) %>
+<% __this.CascadeDesign('thread/chatbox/queued', __this) %>
+</div>
+
+
+<%
+function scrolldown()
+{
+  var chatbox = __this.first();
+
+  chatbox.animate({ scrollTop: chatbox.prop('scrollHeight') }, 'normal');
+};
+
+__this.DeferCascade(scrolldown);
+
+__this.Defer(function()
+{
+  __this.first().on('height.changed', scrolldown);
+
+  __this.first().on('new.messages', function()
+  {
+    __this.first().find('.send.queue').trigger('clear');
+  });
+});
+%>

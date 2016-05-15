@@ -10,7 +10,15 @@ class user extends api
     ];
   }
 
-  public function GetSessionStorage()
+  public function StorageShortcut()
+  {
+    return function &()
+    {
+      return $this->GetSessionStorage();
+    };
+  }
+
+  public function &GetSessionStorage()
   {
     if (session_status() != PHP_SESSION_ACTIVE)
       session_start();
@@ -18,31 +26,36 @@ class user extends api
     return $_SESSION;
   }
 
-  protected function login($username)
+  public function ResetSession()
   {
-    phoxy_protected_assert(strlen($username) > 3, "Minimum username length is 3 characters");
-
-    $my_name = &$this->username();
-    $my_name = $username;
-
-    return
-    [
-      'data' =>
-      [
-        'login' => true,
-      ],
-    ];
+    $this->GetSessionStorage();
+    session_destroy();
   }
 
-  private function username()
+  private function login()
+  {
+    db::Query("INSERT INTO users VALUES ()");
+
+    $uid = db::AffectedID();
+
+    $my_name = &$this->get_uid();
+    $my_name = $uid;
+  }
+
+  private function get_uid()
   {
     return $this->GetSessionStorage()['username'];
   }
 
-  public function MyName()
+  private function is_logined()
   {
-    $ret =  $this->username();
-    phoxy_protected_assert($ret, "Login required to proceed");
-    return $ret;
+    return null == $this->get_uid();
+  }
+
+  public function uid()
+  {
+    if (!$this->is_logined())
+      $this->login();
+    return $this->get_uid();
   }
 }

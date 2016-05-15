@@ -1,0 +1,49 @@
+<div class='thread'>
+
+  <div class='content'>
+    <% __this.CascadeDesign('thread/chatbox/index', __this) %>
+  </div>
+
+  <div class='input'>
+    <% __this.CascadeDesign('thread/input/index') %>
+  </div>
+</div>
+
+<%
+var textarea, content;
+__this.Defer(function()
+{
+  if (__this.first().height() != 0)
+    return;
+
+  __this.first().height($(window).height() - 10);
+
+  phoxy.Defer(arguments.callee, 500);
+})
+
+function Recalculate()
+{
+  var total = __this.first().height();
+  var input = textarea.height();
+
+  content.height((total - input));
+}
+
+__this.DeferCascade(function()
+{
+  textarea = __this.first().find('textarea');
+  content = __this.first().children('.content');
+
+  textarea.on('keydown keyup', Recalculate)
+
+  Recalculate();
+});
+
+__this.Defer(function()
+{
+  __this.first().on('send.text', function(e, text)
+  {
+    __this.first().find('.send.queue').trigger('add', text);
+  });
+});
+%>

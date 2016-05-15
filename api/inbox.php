@@ -2,39 +2,66 @@
 
 class inbox extends api
 {
-  protected function Reserve()
+  protected function reserve()
   {
-    $inbox = $this->fork()->brief_inbox();
-
     return
     [
-      'design' => 'inbox/main',
-      'data' =>
-      [
-        'threads' => $inbox,
-      ],
+      'design' => 'inbox/index',
     ];
   }
 
-  protected function add($title, $members)
+  private function ReqursiveRemoveCandidates($media)
   {
-    return phoxy::Load('thread')->Create($title, $members);
-  }
-
-  protected function brief_inbox()
-  {
-    $threads = phoxy::Load('thread')->FindByUser();
+    if (!is_array($media))
+      return $media;
 
     $ret = [];
-    foreach ($threads as $thread)
-      $ret[] = phoxy::Load('thread')->info($thread);
+    foreach ($media as $key => $val)
+      if ($key === 'candidates')
+        return $val[0];
+      else
+        $ret[$key] = $this->ReqursiveRemoveCandidates($val);
+
+    return $ret;
+  }
+
+  private function MarkWithNetwork($network, $inbox)
+  {
+    return array_map(function($thread) use ($network)
+    {
+      $thread['network'] = $network;
+      return $this->ReqursiveRemoveCandidates($thread);
+    }, $inbox);
+  }
+
+  protected function itemize()
+  {
+    $accounts = phoxy::Load('accounts')->connected();
+    $networks = phoxy::Load('networks');
+
+    $inbox = [];
+    foreach ($accounts as $network => $account)
+    {
+      $connection = $networks->get_network_object($network);
+      $login = $connection->log_in($account['login'], $account['password']);
+
+      $threads = $connection->threads();
+
+      $inbox = array_merge
+      (
+        $inbox
+        , $this->MarkWithNetwork($network, $threads['requests'])
+        , $this->MarkWithNetwork($network, $threads['inbox']['threads'])
+      );
+    }
 
     return
     [
+      "design" => "inbox/itemize",
       "data" =>
       [
-        "inbox" => $ret,
-      ]
+        "inbox" => $inbox,
+      ],
     ];
   }
 }

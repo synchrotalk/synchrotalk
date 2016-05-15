@@ -26,6 +26,14 @@ route:
     compress: true
     mime: text/ejs
 
+  - url: \/assets\/(.+\.png)$
+    static: true
+    mime: image/png
+
+  - url: \/assets\/(.+\.jpg)$
+    static: true
+    mime: image/jpg
+
   - url: \/robots\.txt
     rewrite: /api/utils/robot/robot
 

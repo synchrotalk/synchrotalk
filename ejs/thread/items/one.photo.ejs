@@ -1,0 +1,9 @@
+<%
+__this.CascadeDesign('utils/image/mini', __this, function()
+{
+  this.first().click(function()
+  {
+    $('body').append(phoxy.DeferRender('utils/modal/image', __this));
+  });
+});
+%>

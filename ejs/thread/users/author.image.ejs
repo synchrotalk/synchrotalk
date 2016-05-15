@@ -1,0 +1,14 @@
+<%
+for (var k in __this.users)
+{
+  var v = __this.users[k];
+
+  if (v.id == __this.author)
+    break;
+}
+
+if (v.id != __this.author)
+  return notify("error", "Unable to find author " + __this.author);
+
+__this.CascadeDesign('thread/users/one.image', v);
+%>
