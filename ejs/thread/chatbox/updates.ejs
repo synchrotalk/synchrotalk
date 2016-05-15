@@ -1,0 +1,55 @@
+<div class='ui comments'>
+
+</div>
+
+<%
+__this.Defer(function()
+{
+  if (!__this.first().parent())
+    return;
+
+  var task = phoxy.ApiRequest(['thread/read', __this.network, __this.id],
+    function(r)
+    {
+      slice_items(r.items, r.users);
+    }
+  );
+
+
+  phoxy.Defer(arguments.callee, 5000);
+});
+
+var last_snap = __this.items[0].snap;
+function slice_items(items, users)
+{
+  var to_show = [];
+
+  for (var k in items)
+    if (items[k].snap > last_snap)
+      to_show.push(items[k]);
+    else
+      break;
+
+  if (to_show.length == 0)
+    return;
+
+  last_snap = items[0].snap;
+
+  __this.first().trigger('new.messages', [to_show, users]);
+}
+
+
+__this.Defer(function()
+{
+  __this.first().on('new.messages', function sliceitems(e, items, users)
+  {
+    var design = phoxy.DeferRender('thread/chatbox/itemize.functor',
+    {
+      users: users,
+      items: items
+    });
+
+    __this.first().append(design);
+  });
+});
+%>
