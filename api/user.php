@@ -2,41 +2,47 @@
 
 class user extends api
 {
-
   protected function Reserve()
   {
     return
     [
-      'design' => 'user/main',
+      'design' => 'user/login',
     ];
   }
 
-  protected function login($username="")
+  public function GetSessionStorage()
   {
-    session_start();
-    $login = false;
-    if($username!=="")
-    {
-      $_SESSION['username'] = $username;
-      $login = true;
-    }
+    if (session_status() != PHP_SESSION_ACTIVE)
+      session_start();
+
+    return $_SESSION;
+  }
+
+  protected function login($username)
+  {
+    phoxy_protected_assert(strlen($username) > 3, "Minimum username length is 3 characters");
+
+    $my_name = &$this->username();
+    $my_name = $username;
+
     return
     [
-      'design' => 'user/login',
-      'login' => $login,
-      'data' => [
-        'username' => $this->GetUserName(),
+      'data' =>
+      [
+        'login' => true,
       ],
     ];
   }
 
-  protected function GetUserName()
+  private function username()
   {
-    if(isset($_SESSION['username'])){
-      return $_SESSION['username'];
-    }
-
-    return false;
+    return $this->GetSessionStorage()['username'];
   }
 
+  public function MyName()
+  {
+    $ret =  $this->username();
+    phoxy_protected_assert($ret, "Login required to proceed");
+    return $ret;
+  }
 }
