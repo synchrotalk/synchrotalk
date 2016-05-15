@@ -1,3 +1,37 @@
-Thread
+<div class='thread'>
 
-<% __this.CascadeDesign('thread/chatbox/index', __this) %>
+  <div class='content'>
+    <% //__this.CascadeDesign('thread/chatbox/index', __this) %>
+  </div>
+
+  <div class='input'>
+    <% __this.CascadeDesign('thread/input/index') %>
+  </div>
+</div>
+
+<%
+var textarea, content;
+__this.Defer(function()
+{
+  if (__this.first().height() == 0)
+    __this.first().height($('body').height() - 10);
+})
+
+function Recalculate()
+{
+  var total = __this.first().height();
+  var input = textarea.height();
+
+  content.height((total - input));
+}
+
+__this.DeferCascade(function()
+{
+  textarea = __this.first().find('textarea');
+  content = __this.first().find('.content');
+
+  textarea.on('keydown keyup', Recalculate)
+
+  Recalculate();
+});
+%>
