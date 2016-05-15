@@ -1,12 +1,12 @@
 <div class='comment' id='<%@ __this.id %>'>
   <a class='avatar'>
-    <% __this.CascadeDesign('thread/users/author.image', {author: __this.author, users: __this.users}) %>
+    <% __this.CascadeDesign('thread/users/author.image', {author: __this.item.author, users: __this.users}) %>
   </a>
 
 
   <div class='content'>
     <a class='author'>
-      <% __this.CascadeDesign('thread/users/author.name', {author: __this.author, users: __this.users}) %>
+      <% __this.CascadeDesign('thread/users/author.name', {author: __this.item.author, users: __this.users}) %>
     <a>
     <div class='metadata'>
       <div class='date'>
