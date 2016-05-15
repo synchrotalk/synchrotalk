@@ -1,5 +1,11 @@
 <div class="image content">
   <div class="image">
-    <% __this.CascadeDesign('utils/image/fluid', __this) %>
+    <% __this.CascadeDesign('utils/image/fluid', __this, function()
+    {
+      this.first().click(function()
+      {
+        __this.first().parents('.modal').modal('hide');
+      })
+    }) %>
   </div>
 </div>
