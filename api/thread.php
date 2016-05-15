@@ -16,6 +16,16 @@ class thread extends api
     $networks = phoxy::Load('networks');
     $connection = $networks->get_network_object($network);
 
-    return $connection->fetch_messages($id);
+    $ret = $connection->fetch_messages($id);
+    $ret['network'] = $network;
+    return $ret;
+  }
+
+  protected function Send($network, $id, $text)
+  {
+    $networks = phoxy::Load('networks');
+    $connection = $networks->get_network_object($network);
+
+    return $connection->send_message($id, $text);
   }
 }

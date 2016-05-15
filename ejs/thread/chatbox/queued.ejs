@@ -1,0 +1,33 @@
+<div class='ui comments send queue'>
+</div>
+<%
+__this.Defer(function()
+{
+  __this.first().on('add.to.send.queue', function(e, text)
+  {
+    var message =
+    {
+      users: __this.users,
+      item:
+      {
+        author: 0,
+        type: 'text',
+        snap: parseInt(Date.now() / 1000),
+        text: text,
+      }
+    };
+
+    var design = phoxy.DeferRender('thread/chatbox/one', message);
+    __this.first().append(design);
+
+
+    phoxy.ApiRequest(
+      [
+        'thread/send',
+        __this.network,
+        __this.id,
+        text
+      ]);
+  });
+});
+%>
