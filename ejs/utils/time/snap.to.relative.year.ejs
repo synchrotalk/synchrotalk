@@ -1,0 +1,14 @@
+<%
+var event = new window.Date(__this.snap * 1000);
+var now = new window.Date(Date.now());
+
+var difference = now - event;
+
+if (difference < 0)
+  return __this.__append("Your time settings incorrect!");
+
+var diff = new Date(difference + now.getTimezoneOffset() * 60 * 1000);
+
+if (diff.getFullYear() != 1970)
+  __this.CascadeDesign('utils/time/snap.to.year', __this);
+%>
