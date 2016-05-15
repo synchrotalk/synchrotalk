@@ -17,7 +17,10 @@ __this.Defer(function()
       }
     };
 
-    var design = phoxy.DeferRender('thread/chatbox/one', message);
+    var design = phoxy.DeferRender('thread/chatbox/one', message, function()
+    {
+      this.first().trigger('height.changed');
+    });
     __this.first().append(design);
 
 
@@ -28,6 +31,11 @@ __this.Defer(function()
         __this.id,
         text
       ]);
+  });
+
+  __this.first().on('clear', function()
+  {
+    __this.first().find('.comment').remove();
   });
 });
 %>
