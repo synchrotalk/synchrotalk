@@ -1,7 +1,7 @@
 <div class='thread'>
 
   <div class='content'>
-    <% //__this.CascadeDesign('thread/chatbox/index', __this) %>
+    <% __this.CascadeDesign('thread/chatbox/index', __this) %>
   </div>
 
   <div class='input'>
@@ -28,7 +28,7 @@ function Recalculate()
 __this.DeferCascade(function()
 {
   textarea = __this.first().find('textarea');
-  content = __this.first().find('.content');
+  content = __this.first().children('.content');
 
   textarea.on('keydown keyup', Recalculate)
 
