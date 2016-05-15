@@ -46,6 +46,7 @@ class inbox extends api
       $login = $connection->log_in($account['login'], $account['password']);
 
       $threads = $connection->threads();
+
       $inbox = array_merge
       (
         $inbox
