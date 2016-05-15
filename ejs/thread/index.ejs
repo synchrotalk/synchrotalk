@@ -16,7 +16,7 @@ __this.Defer(function()
   if (__this.first().height() != 0)
     return;
 
-  __this.first().height($('body').height() - 10);
+  __this.first().height($(window).height() - 10);
 
   phoxy.Defer(arguments.callee, 500);
 })
