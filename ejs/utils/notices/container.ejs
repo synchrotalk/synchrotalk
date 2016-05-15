@@ -10,6 +10,8 @@ window.message = function(type, text)
   __this.first().find('.notices.container').prepend(popup);
 }
 
+window.notice = window.notify = window.message;
+
 var showing_messages = [];
 var clock_running = null;
 
