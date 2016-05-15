@@ -1,21 +1,17 @@
 <div class='ui comments'>
 <%
-var origin_canvas = __this.escape().DrawTo();
 
-    var obj = { users: __this.users };
-    for (var k in __this.items)
-    {
-      var v = __this.items[k];
+function DrawMessages()
+{
+  var obj = { users: __this.users };
+  for (var k in __this.items)
+  {
+    var v = __this.items[k];
+    obj.item = v;
+    this.CascadeDesign('thread/chatbox/one', obj);
+  }
+}
 
-      obj.item = v;
-
-      this.CascadeDesign('thread/chatbox/one', obj);
-    }
-
-var just_drawed = __this.escape().DrawTo();
-
-var new_canvas = origin_canvas.concat(just_drawed.reverse());
-
-__this.escape().DrawTo(new_canvas);
+__this.CascadeDesign('snippets/reverse', {cb: DrawMessages});
 %>
 </div>
