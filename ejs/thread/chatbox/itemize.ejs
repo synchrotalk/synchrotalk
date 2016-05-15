@@ -1,17 +1,3 @@
 <div class='ui comments'>
-<%
-
-function DrawMessages()
-{
-  var obj = { users: __this.users };
-  for (var k in __this.items)
-  {
-    var v = __this.items[k];
-    obj.item = v;
-    this.CascadeDesign('thread/chatbox/one', obj);
-  }
-}
-
-__this.CascadeDesign('snippets/reverse', {cb: DrawMessages});
-%>
+<% __this.CascadeDesign('thread/chatbox/itemize.functor', __this) %>
 </div>
