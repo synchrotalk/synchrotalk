@@ -3,3 +3,11 @@
 </div>
 
 
+<%
+__this.DeferCascade(function()
+{
+  var chatbox = __this.first();
+
+  chatbox.animate({ scrollTop: chatbox.prop('scrollHeight') }, 'normal');
+});
+%>
