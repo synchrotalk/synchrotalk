@@ -1,0 +1,21 @@
+<%
+var event = new window.Date(__this.snap * 1000);
+var now = new window.Date(Date.now());
+
+var difference = now - event;
+
+if (difference < 0)
+  return __append("Your time settings incorrect!");
+
+var diff = new Date(difference + now.getTimezoneOffset() * 60 * 1000);
+
+var hours = diff.getHours();
+var minutes = diff.getMinutes();
+
+if (hours > 1)
+  __this.__append(" " + hours + " hours ago");
+else if (minutes > 1)
+  __this.__append(" " + minutes + " minutes ago");
+else
+  __this.__append("now");
+%>
