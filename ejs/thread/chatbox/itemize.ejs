@@ -1,0 +1,13 @@
+<div class='ui comments'>
+<%
+var obj = { users: __this.users };
+for (var k in __this.items)
+{
+  var v = __this.items[k];
+
+  obj.item = v;
+
+  __this.CascadeDesign('thread/chatbox/one', obj);
+}
+%>
+</div>
