@@ -34,4 +34,12 @@ __this.DeferCascade(function()
 
   Recalculate();
 });
+
+__this.Defer(function()
+{
+  __this.first().on('send.text', function(e, text)
+  {
+    __this.first().find('.send.queue').trigger('add', text);
+  });
+});
 %>
