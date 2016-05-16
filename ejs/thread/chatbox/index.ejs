@@ -14,6 +14,10 @@ function scrolldown()
 };
 
 __this.DeferCascade(scrolldown);
+__this.DeferCascade(function()
+{
+  __this.first().addClass('filled');
+});
 
 __this.Defer(function()
 {

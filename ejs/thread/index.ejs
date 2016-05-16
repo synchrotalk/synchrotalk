@@ -11,19 +11,10 @@
 
 <%
 var textarea, content;
-__this.Defer(function()
-{
-  if (__this.first().height() != 0)
-    return;
-
-  __this.first().height($(window).height() - 10);
-
-  phoxy.Defer(arguments.callee, 500);
-})
 
 function Recalculate()
 {
-  var total = __this.first().height();
+  var total = __this.first().height($(window).height() - 10).height();
   var input = textarea.height();
 
   content.height((total - input));
@@ -34,7 +25,7 @@ __this.DeferCascade(function()
   textarea = __this.first().find('textarea');
   content = __this.first().children('.content');
 
-  textarea.on('keydown keyup', Recalculate)
+  textarea.on('keydown keyup height.changed', Recalculate)
 
   Recalculate();
 });
