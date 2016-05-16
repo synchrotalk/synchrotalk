@@ -39,6 +39,48 @@ var warmup_obj =
   },
   OnBeforeFirstApiCall: function()
   {
+    // Disable tracking analytics if no indicator set
+    if (!phoxy.Config()['ga'])
+      return ga = function() {};
+
+    if (typeof ga == 'undefined')
+      return setTimeout(arguments.callee, 100);
+
+    ga('create', phoxy.Config()['ga'], 'auto');
+    ga('send', 'pageview');
+
+    phoxy.Override('ApiRequest', function(request)
+    {
+      var link = request;
+      if (typeof request == 'array')
+        link = request[0];
+
+      ga('send', 'event', 'api', link);
+
+      return arguments.callee.origin.apply(this, arguments);
+    });
+
+    function track_url(url)
+    {
+      ga('set', 'page', typeof url == 'array' ? url[0] : url);
+      ga('send', 'pageview');
+    }
+
+    phoxy._.internal.Override(phoxy._.click, 'OnPopState', function(e)
+    {
+      track_url(e.target.location.pathname);
+
+      return arguments.callee.origin.apply(this, arguments);
+    });
+
+    phoxy.Override('ChangeURL', function(url)
+    {
+      var ret = arguments.callee.origin.apply(this, arguments);
+
+      track_url(url);
+      return ret;
+    });
+
   },
   OnExecutingInitialClientCode: function()
   {

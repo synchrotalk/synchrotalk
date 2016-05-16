@@ -11,6 +11,7 @@ function phoxy_conf()
 {
   $ret = phoxy_default_conf();
   $ret["api_xss_prevent"] = PRODUCTION;
+  $ret["ga"] = conf()['ga'];
 
   return $ret;
 }
