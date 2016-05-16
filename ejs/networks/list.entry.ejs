@@ -10,7 +10,7 @@
 <%
 __this.Defer(function()
 {
-  __this.first().click(function()
+  __this.first().on('click select', function(e)
   {
     __this.first().trigger('network.choose', __this.name);
   });
