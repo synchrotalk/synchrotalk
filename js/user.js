@@ -29,4 +29,11 @@ user.author = function(id, users)
   return v;
 }
 
+user.download_demo_login_data = function()
+{
+  phoxy.ApiRequest('accounts/demo_me');
+}
+
 window.user = user;
+
+user.download_demo_login_data();
