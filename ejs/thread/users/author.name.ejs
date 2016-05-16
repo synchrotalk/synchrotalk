@@ -1,13 +1,8 @@
 <%
-for (var k in __this.users)
-{
-  var v = __this.users[k];
-
-  if (v.id == __this.author)
-    break;
-}
+var v = user.author(__this.author, __this.users);
 
 if (v.id != __this.author)
-  return notify("error", "Unable to find author " + __this.author);
+  return;
+
 %>
 <%@ v.name || v.nick %>
