@@ -1,6 +1,6 @@
-vendor
-phoxy
-composer.lock
-secret.yaml
-plugins
-networks
+/vendor
+/phoxy
+/composer.lock
+/secret.yaml
+/plugins
+/networks

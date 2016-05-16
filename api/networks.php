@@ -22,18 +22,6 @@ class networks extends api
     ];
   }
 
-  protected function icon($name)
-  {
-    return
-    [
-      "design" => "networks/icon",
-      "data" =>
-      [
-        "icon" => conf()->networks->icons->$name,
-      ],
-    ];
-  }
-
   public function __get($name)
   {
     return $this->get_network_object($name);
