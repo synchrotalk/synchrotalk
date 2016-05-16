@@ -1,3 +1,7 @@
 <table class="ui very basic unstackable celled table">
+<%
+if (!__this.inbox.length)
+  __this.__append("Yet nobody sent me <u>" + window.user.network + "</u> private message");
+%>
   <% __this.ForeachDesign("inbox/itemize.entry", __this.inbox, undefined, "<tr>"); %>
 </table>
