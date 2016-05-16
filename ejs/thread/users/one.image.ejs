@@ -8,5 +8,11 @@ var img =
   classes: "ui mini rounded image",
 };
 
-__this.CascadeDesign("utils/image/abstract", img);
+__this.CascadeDesign("utils/image/abstract", img, function()
+{
+  this.first().click(function()
+  {
+    $('body').append(phoxy.DeferRender('utils/modal/image', img));
+  });
+});
 %>
