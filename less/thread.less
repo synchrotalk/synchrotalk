@@ -9,7 +9,11 @@
 .thread .chatbox {
   overflow:auto;
   height: 100%;
-  vertical-align: bottom;
+  max-height: 90vh;
+}
+
+.thread .chatbox.filled {
+  max-height: none;
 }
 
 .thread .chatbox .comment .content .image {
