@@ -69,6 +69,8 @@ class accounts extends api
         'user' => $user,
         'next' => 'inbox',
       ],
+      "script" => "user",
+      "before" => "user.login",
     ];
   }
 
