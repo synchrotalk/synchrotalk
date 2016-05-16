@@ -1,1 +1,12 @@
-<img src="<%@ __this.avatar %>" class="ui mini rounded image">
+<%
+if (!__this.avatar)
+  __this.avatar = "/assets/img/icon/user/anonymous.png";
+
+var img =
+{
+  url: __this.avatar,
+  classes: "ui mini rounded image",
+};
+
+__this.CascadeDesign("utils/image/abstract", img);
+%>

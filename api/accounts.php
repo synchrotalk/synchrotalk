@@ -35,6 +35,24 @@ class accounts extends api
     $accounts = [];
   }
 
+  protected function demo_me()
+  {
+    $storage_functor = phoxy::Load('user')->StorageShortcut();
+    $accounts = &$storage_functor()['accounts'];
+
+    phoxy_protected_assert(count($accounts), "User not logined");
+
+    return
+    [
+      "script" => "user",
+      "before" => "user.login",
+      "data" =>
+      [
+        "user" => array_values($accounts)[0]['user'],
+      ],
+    ];
+  }
+
   protected function add($network, $login, $password)
   {
     $storage_functor = phoxy::Load('user')->StorageShortcut();
@@ -59,6 +77,7 @@ class accounts extends api
       "network" => $network,
       "login" => $login,
       "password" => $password,
+      "user" => $user,
     ];
 
     return
@@ -69,6 +88,8 @@ class accounts extends api
         'user' => $user,
         'next' => 'inbox',
       ],
+      "script" => "user",
+      "before" => "user.login",
     ];
   }
 
