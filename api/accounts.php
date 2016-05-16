@@ -72,6 +72,8 @@ class accounts extends api
     $user = $insta->log_in($login, $password);
     phoxy_protected_assert($user, "Login/password invalid");
 
+    $user['network'] = $network;
+
     $accounts[$network] =
     [
       "network" => $network,
