@@ -1,6 +1,6 @@
 [submodule "plugin"]
 	path = plugin
-	url = https://github.com/Exsul/synchrotalk.plugin
+	url = ssh://git@github.com/Exsul/synchrotalk.plugin
 [submodule "assets"]
 	path = assets
-	url = https://github.com/Exsul/synchrotalk.assets
+	url = ssh://git@github.com/Exsul/synchrotalk.assets
