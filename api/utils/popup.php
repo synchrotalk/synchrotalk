@@ -10,8 +10,31 @@ class popup extends api
       "data" =>
       [
         "url" => $url,
-        "context" => $params,
+        "params" => $params,
       ],
+    ];
+  }
+
+  protected function Design($design, $context = [], $params = [])
+  {
+    return
+    [
+      "design" => "utils/popup/cockpit.design",
+      "data" =>
+      [
+        "design" => $design,
+        "context" => $context,
+        "params" => $params,
+      ],
+    ];
+  }
+
+  protected function bring_design($design, $context = [])
+  {
+    return
+    [
+      "design" => $design,
+      "data" => $context,
     ];
   }
 }
