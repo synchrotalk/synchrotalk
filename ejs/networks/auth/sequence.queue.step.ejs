@@ -1,1 +1,11 @@
-<h3 class='ui header disabled'><%@ __this.data %></h3>
+<h3 class='ui header disabled scheduled step'><%@ __this.data %></h3>
+
+<%
+__this.Defer(function()
+{
+  __this.first().on('step.spawn', function()
+  {
+    __this.first().removeClass('disabled');
+  });
+});
+%>
