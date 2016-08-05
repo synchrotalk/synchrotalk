@@ -10,7 +10,7 @@ class auth extends api
   private $obj;
   public function load($network_name = null)
   {
-    if (isset($network_name))
+    if (!isset($network_name))
       return $this->obj;
 
     $network = phoxy::Load('networks/network')->get_network_object($network_name);
@@ -72,12 +72,14 @@ class auth extends api
   {
     $this->require_known_instruction($sequence_type, $instruction);
 
+    $auth = $this->load();
+
     return
     [
       'design' => 'networks/auth/sequence.step',
       'data' =>
       [
-        'commands' =>
+        'commands' => $auth->$instruction($data),
       ],
     ];
   }
