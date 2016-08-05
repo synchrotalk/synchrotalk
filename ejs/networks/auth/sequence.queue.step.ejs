@@ -5,7 +5,12 @@ __this.Defer(function()
 {
   __this.first().on('step.spawn', function()
   {
-    __this.first().removeClass('disabled');
+    __this.first().removeClass('disabled scheduled');
+
+    phoxy.Defer(function()
+    { // debug player
+      __this.first().trigger('step.complete');
+    }, 1000);
   });
 });
 %>
