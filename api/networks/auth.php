@@ -15,6 +15,26 @@ class auth extends api
 
     $auth_type = $auth->preferred_authtype();
 
+
+    return
+    [
+      'design' => 'networks/auth/sequence.play',
+      'data' =>
+      [
+        'sequence' => $this->get_sequence($auth_type),
+      ],
+    ];
+  }
+
+  private function require_known_instruction($sequence_type, $instruction)
+  {
+    $sequence = $this->get_sequence($sequence_type);
+
+    phoxy_protected_assert(in_array($instruction, $sequence), "Sorry action invalid");
+  }
+
+  public function get_sequence($sequence_type)
+  {
     $sequences =
     [
       'direct'   =>
@@ -34,26 +54,22 @@ class auth extends api
       ],
     ];
 
-    return
-    [
-      'design' => 'play_sequence',
-      'data' =>
-      [
-        'sequence' => $sequences[$auth_type],
-      ],
-    ];
+    return $sequences[$sequence_type];
   }
 
-  protected function FetchRequirments()
+  protected function FetchRequirments($sequence_type, $instruction)
   {
+    $this->require_known_instruction($sequence_type, $instruction);
   }
 
-  protected function FetchQuestion()
+  protected function FetchQuestion($sequence_type, $instruction, $question)
   {
+    $this->require_known_instruction($sequence_type, $instruction);
   }
 
-  protected function FetchAnswer()
+  protected function FetchAnswer($sequence_type, $instruction, $answer)
   {
+    $this->require_known_instruction($sequence_type, $instruction);
   }
 
   private function RefactorDirectAnswer()
