@@ -2,11 +2,20 @@
 
 class auth extends api
 {
-  public function load($network_name)
+  public function __construct($network_name = null)
   {
+    $this->load($network_name);
+  }
+
+  private $obj;
+  public function load($network_name = null)
+  {
+    if (isset($network_name))
+      return $this->obj;
+
     $network = phoxy::Load('networks/network')->get_network_object($network_name);
 
-    return $network->auth();
+    return $this->obj = $network->auth();
   }
 
   protected function add($network_name)
@@ -21,6 +30,7 @@ class auth extends api
       'design' => 'networks/auth/sequence.play',
       'data' =>
       [
+        'network' => $network_name,
         'type' => $auth_type,
         'sequence' => $this->get_sequence($auth_type),
       ],
@@ -61,6 +71,15 @@ class auth extends api
   protected function make_step($sequence_type, $instruction, $data)
   {
     $this->require_known_instruction($sequence_type, $instruction);
+
+    return
+    [
+      'design' => 'networks/auth/sequence.step',
+      'data' =>
+      [
+        'commands' =>
+      ],
+    ];
   }
 
   private function RefactorDirectAnswer()
