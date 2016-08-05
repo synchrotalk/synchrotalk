@@ -1,6 +1,24 @@
 <%
+var awaiting;
+
+function block_popup(cb)
+{
+  awaiting = cb;
+}
+
+function continue_popup()
+{
+  phoxy.Defer(function()
+  {
+    awaiting({url: __this.data});
+  }, 3000);
+}
+
+__this.CascadeDesign("utils/popup/cockpit", block_popup);
+
 __this.CascadeDesign('utils/dimmer/dimmer.attention',
   {
-    content: "Please follow popup instructions",
-  });
+    content: "Social network requests your action",
+  }, continue_popup);
+
 %>
