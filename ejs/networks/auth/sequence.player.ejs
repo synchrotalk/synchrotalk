@@ -1,0 +1,7 @@
+<h2>Sequence player for <%@ __this.type %></h2>
+<div class='player' type='<%@ __this.type %>' curid="-1">
+<%
+for (var k in __this.sequence)
+  __this.CascadeDesign('networks/auth/sequence.queue.step', __this.sequence[k]);
+%>
+</div>
