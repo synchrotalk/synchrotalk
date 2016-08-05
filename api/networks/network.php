@@ -18,7 +18,7 @@ class network extends api
 
     $obj = $networks->get_network_object($network);
 
-    $this->init_network_object($obj);
+    $this->init_network_object($obj, $network);
 
     return $obj;
   }
