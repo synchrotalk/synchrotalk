@@ -1,41 +1,22 @@
-<div class="ui welcome page dimmer">
-  <div class="content">
-    <div class="center">
-      <h1 class='ui inverted header'>
-        Hello <i><%@ __this.user.nick %></i>
-      </h1>
-    </div>
-  </div>
-</div>
-
 <%
-__this.Defer(function()
-{
-  $('body').append(__this.first().detach());
+__this.CascadeDesign('utils/dimmer/dimmer.attention',
+  {
+    content: "Hello " +  __this.user.nick,
+    next: __this.next,
+  });
 
+__this.DeferCascade(function()
+{
   __this.first()
     .dimmer
-    ({
-      onShow: function()
-      {
-        phoxy.Defer(function()
+      ({
+        onShow: function()
         {
-          __this.first().dimmer('hide');
-        }, 5000);
-      }
-      ,
-      onHide: function()
-      {
-        phoxy.Defer(function()
-        {
-          __this.first().remove();
-        }, 5000);
-      }
-    })
-    .dimmer('show');
-
-
-  if (__this.next)
-    phoxy.MenuCall(__this.next);
+          phoxy.Defer(function()
+          {
+            __this.first().dimmer('hide');
+          }, 5000);
+        }
+      })
 });
 %>
