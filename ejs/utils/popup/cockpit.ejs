@@ -17,6 +17,7 @@ function second_try()
     return popitup(__this.url)
 }
 
+var popup;
 function wait_for_focus_and_begin()
 {
   if (!window.focus)
@@ -24,13 +25,31 @@ function wait_for_focus_and_begin()
 
   newwindow = popitup(__this.url);
   if (newwindow == undefined)
-  second_try();
+    second_try();
   if (newwindow == undefined)
-  return alert("Unable to create popup, sorry");
+    return alert("Unable to create popup, sorry");
 
   newwindow.focus();
+  popup = newwindow;
+
+  __this.first().trigger('popup.openned', popup);
+
+  __this.first().on('popup.close', function()
+  {
+    popup.close();
+  });
+
+  emit_when_closed();
 }
 
-wait_for_focus_and_begin();
+function emit_when_closed()
+{
+  if (!popup.closed)
+    return phoxy.Defer(arguments.callee, 100);
+
+  __this.first().trigger('popup.closed');
+}
+
+__this.Defer(wait_for_focus_and_begin);
 
 %>
