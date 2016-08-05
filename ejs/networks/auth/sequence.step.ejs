@@ -1,8 +1,13 @@
 <%
 console.log('STEP', __this);
 
-phoxy.Defer(function()
-{ // debug player
-  __this.first().trigger('step.complete');
-}, 5000);
+
+if (__this.commands.length == 0)
+  return __this.CascadeDesign('networks/auth/step.complete');
+
+if (__this.commands.data != 'undefined')
+  return __this.CascadeDesign('networks/auth/step.redirect');
+
+alert("Implement form requesting step");
+
 %>
