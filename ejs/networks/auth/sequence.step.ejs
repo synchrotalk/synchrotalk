@@ -1,0 +1,8 @@
+<%
+console.log('STEP', __this);
+
+phoxy.Defer(function()
+{ // debug player
+  __this.first().trigger('step.complete');
+}, 5000);
+%>

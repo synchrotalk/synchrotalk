@@ -15,7 +15,7 @@ function find_next_and_trigger()
     return __this.first().trigger('player.finish');
 
   var next = scheduled.first();
-  next.trigger('step.spawn');
+  next.trigger('step.spawn', [__this.network, __this.type]);
 }
 
 __this.DeferCascade(function()
