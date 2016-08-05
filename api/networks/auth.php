@@ -21,6 +21,7 @@ class auth extends api
       'design' => 'networks/auth/sequence.play',
       'data' =>
       [
+        'type' => $auth_type,
         'sequence' => $this->get_sequence($auth_type),
       ],
     ];
@@ -57,17 +58,7 @@ class auth extends api
     return $sequences[$sequence_type];
   }
 
-  protected function FetchRequirments($sequence_type, $instruction)
-  {
-    $this->require_known_instruction($sequence_type, $instruction);
-  }
-
-  protected function FetchQuestion($sequence_type, $instruction, $question)
-  {
-    $this->require_known_instruction($sequence_type, $instruction);
-  }
-
-  protected function FetchAnswer($sequence_type, $instruction, $answer)
+  protected function make_step($sequence_type, $instruction, $data)
   {
     $this->require_known_instruction($sequence_type, $instruction);
   }
