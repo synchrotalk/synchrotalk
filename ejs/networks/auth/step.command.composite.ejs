@@ -11,9 +11,10 @@ __this.DeferCascade(function()
 {
   __this.first().on('step.complete', function(e)
   {
-    if (next())
-      e.stopPropagation();
+    if (!next())
+      return;
 
+    e.stopPropagation();
     next().trigger('command.awake');
   });
 
