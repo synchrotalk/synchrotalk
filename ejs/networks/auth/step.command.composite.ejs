@@ -12,7 +12,7 @@ __this.DeferCascade(function()
   __this.first().on('step.complete', function(e)
   {
     if (next())
-      e.stopPropagnation();
+      e.stopPropagation();
 
     next().trigger('command.awake');
   });
@@ -37,7 +37,7 @@ for (var i = 0; i < __this.length; i++)
     design = 'networks/auth/step.command.popup';
     break;
   case 'redirect':
-    design = 'networks/auth/step.redirect';
+    design = 'networks/auth/step.command.redirect';
     break;
   default:
     alert("Unknown network command: " + command.type);
