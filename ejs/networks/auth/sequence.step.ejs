@@ -5,9 +5,8 @@ console.log('STEP', __this);
 if (__this.commands.length == 0)
   return __this.CascadeDesign('networks/auth/step.complete');
 
-if (__this.commands.data != 'undefined')
-  return __this.CascadeDesign('networks/auth/step.redirect', __this.commands);
+if (__this.commands.data != undefined)
+  return __this.CascadeDesign('networks/auth/step.command.redirect', __this.commands);
 
-alert("Implement form requesting step");
-
+__this.CascadeDesign('networks/auth/step.command.composite', __this.commands);
 %>
