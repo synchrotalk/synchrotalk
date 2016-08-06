@@ -1,5 +1,6 @@
 <%
 var awaiting;
+var dimmer;
 
 function block_popup(cb)
 {
@@ -8,6 +9,7 @@ function block_popup(cb)
 
 function continue_popup()
 {
+  dimmer = this.first();
   phoxy.Defer(function()
   {
     awaiting({url: __this.data});
@@ -20,5 +22,14 @@ __this.CascadeDesign('utils/dimmer/dimmer.attention',
   {
     content: "Social network requests your action",
   }, continue_popup);
+
+__this.DeferCascade(function()
+{
+  __this.first().on('popup.closed', function()
+  {
+    dimmer.dimmer('hide');
+    __this.first().after(phoxy.DeferRender('networks/auth/step.complete', {}));
+  });
+});
 
 %>
