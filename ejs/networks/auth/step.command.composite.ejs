@@ -1,0 +1,41 @@
+<div>
+<%
+__this.Defer(function()
+{
+  __this.first().on('step.complete', function(e)
+  {
+    e.stopPropagnation();
+
+
+  });
+});
+
+for (var i = 0; i < __this.length; i++)
+{
+  var command = __this[i];
+  var data = command['data'];
+
+  switch (command.type)
+  {
+  case 'form':
+    design = 'networks/auth/step.command.form';
+    break;
+  case 'modal':
+    design = 'networks/auth/step.command.modal';
+    break;
+  case 'popup':
+    design = 'networks/auth/step.command.popup';
+    break;
+  case 'redirect':
+    design = 'networks/auth/step.redirect';
+    break;
+  default:
+    alert("Unknown network command: " + command.type);
+    continue;
+  }
+
+  __this.CascadeDesign('networks/auth/step.command.composite.schedule',
+    [design, data]);
+}
+%>
+</div>

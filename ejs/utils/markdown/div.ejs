@@ -1,0 +1,21 @@
+<div class='markdown'>
+</div>
+
+<%
+if (!markdownit)
+  __this.CascadeDesign('snippets/head',
+    {
+      scripts:
+      [
+        "//cdnjs.cloudflare.com/ajax/libs/markdown-it/7.0.0/markdown-it.min.js",
+      ]
+    });
+
+__this.DeferCascade(function()
+{
+  var md = markdownit();
+  var html = md.render(__this.data);
+
+  __this.first().append(html);
+});
+%>
