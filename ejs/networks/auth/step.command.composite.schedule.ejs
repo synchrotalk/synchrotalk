@@ -10,7 +10,14 @@ __this.Defer(function()
     // Workaround issues caused inconsistent phoxy design
     if (typeof __this[1] == 'string')
       __this[1] = {data: __this[1]};
-    __this.first().after(phoxy.DeferRender(__this[0], __this[1]));
+
+    // Whisdom of black magic!! Refactor phoxy to avoid!
+    __this.escape().fired_up = false;
+    __this.escape().DrawTo();
+    __this.CascadeDesign(__this[0], __this[1])
+    __this.first().after(__this.escape().DrawTo());
+    __this.escape().fired_up = true;
+
   });
 });
 %>
