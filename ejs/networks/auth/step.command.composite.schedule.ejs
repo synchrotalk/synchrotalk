@@ -1,11 +1,16 @@
-<div class='ui disabled header'><%@ __this[0] %></div>
+<div class='ui disabled header scheduled command'><%@ __this[0] %></div>
 
 <%
 __this.Defer(function()
 {
   __this.first().on('command.awake', function()
   {
-    __this.first().append(phoxy.DeferRender(__this[0], __this[1]));
+    __this.first().removeClass('disabled scheduled');
+
+    // Workaround issues caused inconsistent phoxy design
+    if (typeof __this[1] == 'string')
+      __this[1] = {data: __this[1]};
+    __this.first().after(phoxy.DeferRender(__this[0], __this[1]));
   });
 });
 %>
