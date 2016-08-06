@@ -1,6 +1,15 @@
-<% __this.CascadeDesign('utils/modal/abstract',
+<%
+__this.CascadeDesign('utils/modal/abstract',
   [
     'networks/auth/step.command.form.bone',
     __this.data
   ])
+
+__this.DeferCascade(function()
+{
+  __this.first().on('modal.close', function()
+  {
+    __this.first().after(phoxy.DeferRender('networks/auth/step.complete', {}));
+  });
+});
 %>

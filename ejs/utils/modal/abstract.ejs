@@ -16,6 +16,7 @@ __this.DeferCascade(function()
       duration: 200,
       onHidden: function()
       {
+        __this.first().trigger('modal.close');
         __this.first().remove();
       }
     })
