@@ -1,13 +1,23 @@
 <div>
 <%
-__this.Defer(function()
+function next()
+{
+  var commands = __this.first().find('.scheduled.command');
+  if (commands.length)
+    return commands.first();
+}
+
+__this.DeferCascade(function()
 {
   __this.first().on('step.complete', function(e)
   {
-    e.stopPropagnation();
+    if (next())
+      e.stopPropagnation();
 
-
+    next().trigger('command.awake');
   });
+
+  next().trigger('command.awake');
 });
 
 for (var i = 0; i < __this.length; i++)
