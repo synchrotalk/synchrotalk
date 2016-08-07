@@ -3,12 +3,13 @@
 <%
 __this.Defer(function()
 {
-  __this.first().on('step.spawn', function(e, network, type)
+  __this.first().on('step.spawn', function(e, network, type, requirements)
   {
     // refactor
     __this.network = network;
     __this.type = type;
     __this.step = __this.data;
+    __this.context = requirements;
     var step = phoxy.DeferRender('networks/auth/sequence.step.spawn', __this);
 
 
