@@ -8,12 +8,14 @@ class auth extends api
   }
 
   private $obj;
+  private $network_name;
   public function load($network_name = null)
   {
     if (!isset($network_name))
       return $this->obj;
 
     $network = phoxy::Load('networks/network')->get_network_object($network_name);
+    $this->network_name = $network_name;
 
     return $this->obj = $network->auth();
   }
@@ -42,6 +44,8 @@ class auth extends api
     $sequence = $this->get_sequence($sequence_type);
 
     phoxy_protected_assert(in_array($instruction, $sequence), "Sorry action invalid");
+
+    return end($sequence) == $instruction;
   }
 
   public function get_sequence($sequence_type)
@@ -70,17 +74,29 @@ class auth extends api
 
   protected function make_step($sequence_type, $instruction, $data)
   {
-    $this->require_known_instruction($sequence_type, $instruction);
+    $is_laststep = $this->require_known_instruction($sequence_type, $instruction);
+
+
 
     $auth = $this->load();
 
-    return
-    [
-      'design' => 'networks/auth/sequence.step',
-      'data' =>
+    if (!$is_laststep)
+      return
       [
-        'commands' => $auth->$instruction($data),
-      ],
+        'design' => 'networks/auth/sequence.step',
+        'data' =>
+        [
+          'commands' => $auth->$instruction($data),
+        ],
+      ];
+
+    $token = $auth->$instruction($data);
+
+    $accounts = &phoxy::Load('accounts', true)->access_accounts_private_storage()();
+    $accounts[$this->network_name] =
+    [
+      "network" => $this->network_name,
+      "token" => $token
     ];
   }
 

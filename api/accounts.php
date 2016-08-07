@@ -55,11 +55,7 @@ class accounts extends api
 
   protected function add($network, $login, $password)
   {
-    $storage_functor = phoxy::Load('user')->StorageShortcut();
-    $accounts = &$storage_functor()['accounts'];
-
-    if (!is_array($accounts))
-      $accounts = [];
+    $accounts = $this->access_accounts_private_storage()();
 
     phoxy_protected_assert(!isset($accounts[$network]), "In demo mode one account per social network");
 
@@ -93,6 +89,20 @@ class accounts extends api
       "script" => "user",
       "before" => "user.login",
     ];
+  }
+
+  public function &access_accounts_private_storage()
+  {
+    $storage_functor = phoxy::Load('user')->StorageShortcut();
+    $accounts = &$storage_functor()['accounts'];
+
+    if (!is_array($accounts))
+      $accounts = [];
+
+    return function &() use (&$accounts)
+    {
+      return $accounts;
+    };
   }
 
   public function connected()
