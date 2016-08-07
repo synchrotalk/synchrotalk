@@ -1,3 +1,59 @@
 <%
-__this.CascadeDesign('utils/markdown/div', "### Example");
+function info(message)
+{
 %>
+  <div class="ui info message">
+    <%@ message %>
+  </div>
+<%
+}
+
+function field(f)
+{
+%>
+  <h4 class='ui inverted header'><%@ f.title || f.name %></h4>
+<%
+  if (f.description)
+    info(f.description);
+%>
+  <div class='ui input'>
+    <input type="<%@ f.name %>" placeholder="<%@ f.placeholder || f.name %>">
+  </div>
+<%
+}
+%>
+<div class="ui form error">
+<%
+for (var i = 0; i < __this.length; i++)
+  switch (__this[i].type)
+  {
+  case 'field':
+    field(__this[i]);
+    break;
+  default:
+    alert("Unsupported markdown " + __this[i].type);
+  }
+%>
+</div>
+<%
+
+// Extract just rendered data
+var markup = __this.escape().Render();
+// Clear rendered screen
+__this.escape().DrawTo();
+
+__this.CascadeDesign('utils/modal/abstract',
+  [
+    'networks/auth/step.command.form.bone',
+    markup
+  ])
+
+__this.DeferCascade(function()
+{
+  __this.first().on('modal.close', function()
+  {
+    __this.first().next().before(phoxy.DeferRender('networks/auth/step.complete', {}));
+  });
+});
+%>
+<form></form>
