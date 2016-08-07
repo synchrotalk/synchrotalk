@@ -7,7 +7,7 @@ for (var k in __this.sequence)
 </div>
 
 <%
-function find_next_and_trigger()
+function find_next_and_trigger(requirements)
 {
   var scheduled = __this.first().find('.scheduled.step');
 
@@ -15,14 +15,14 @@ function find_next_and_trigger()
     return __this.first().trigger('player.finish');
 
   var next = scheduled.first();
-  next.trigger('step.spawn', [__this.network, __this.type]);
+  next.trigger('step.spawn', [__this.network, __this.type, requirements]);
 }
 
 __this.DeferCascade(function()
 {
   var first = __this.first();
 
-  first.on('player.next', function()
+  first.on('player.next', function(e, requirements)
   {
     var curid = parseInt(first.attr('curid')) + 1;
 
@@ -31,12 +31,12 @@ __this.DeferCascade(function()
 
     first.attr('curid', curid);
 
-    find_next_and_trigger();
+    find_next_and_trigger(requirements);
   });
 
-  first.on('step.complete', function()
+  first.on('step.complete', function(e, requirements)
   {
-    first.trigger('player.next');
+    first.trigger('player.next', requirements);
   });
 
   first.trigger('player.next');

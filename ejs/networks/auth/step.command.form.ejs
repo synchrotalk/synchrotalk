@@ -17,12 +17,12 @@ function field(f)
     info(f.description);
 %>
   <div class='ui input'>
-    <input type="<%@ f.name %>" placeholder="<%@ f.placeholder || f.name %>">
+    <input name="<%@ f.name %>" placeholder="<%@ f.placeholder || f.name %>">
   </div>
 <%
 }
 %>
-<div class="ui form error">
+<div class="ui form">
 <%
 for (var i = 0; i < __this.length; i++)
   switch (__this[i].type)
@@ -52,7 +52,16 @@ __this.DeferCascade(function()
 {
   __this.first().on('modal.close', function()
   {
-    __this.first().next().before(phoxy.DeferRender('networks/auth/step.complete', {}));
+    var data = {};
+    __this.first().find('input').each(function()
+    {
+      data[$(this).attr('name')] = $(this).val();
+    });
+
+    __this.first().next().before(phoxy.DeferRender('networks/auth/step.complete',
+      {
+        requirements: data
+      }));
   });
 });
 %>
