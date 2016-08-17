@@ -1,5 +1,5 @@
 db:
-  connection_string: mysql://user:password@host/database
+  connection_string: pgsql://user:password@host/database
 plugins:
   root_path: networks
   lib_path: plugin

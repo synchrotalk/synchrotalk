@@ -23,7 +23,7 @@ class store extends api
     require_once("{$lib_dir}/{$scheme}.php");
 
     $phpsql = new \phpsql();
-    $connection = $phpsql->Connect($conf);
+    $connection = $phpsql->Connect(conf()->db->connection_string);
 
     $this->db = new \phpsql\utils\wrapper($connection);
 
