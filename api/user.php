@@ -42,7 +42,7 @@ class user extends api
     $my_name = $uid;
   }
 
-  private function get_uid()
+  public function get_uid()
   {
     return $this->GetSessionStorage()['username'];
   }

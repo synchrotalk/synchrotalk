@@ -11,6 +11,7 @@ function phoxy_conf()
 {
   $ret = phoxy_default_conf();
   $ret["api_xss_prevent"] = PRODUCTION;
+  $ret["autostart"] = false;
 
   return $ret;
 }
@@ -35,11 +36,13 @@ phoxy_return_worker::$add_hook_cb = function($that)
 };
 
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-//phpsql\OneLineConfig(conf()->db->connection_string);
+include('phoxy/load.php');
+
+phoxy::Load("user/store/db");
 
 try
 {
-  include('phoxy/load.php');
+  \phoxy::Start();
 } catch (Exception $e)
 {
   $message = ["error" => $e->getMessage()];
