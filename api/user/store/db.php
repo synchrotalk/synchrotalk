@@ -12,4 +12,11 @@ class db extends api
   {
     return phoxy::Load('user/store')->GetDB();
   }
+
+  public static function UID()
+  {
+    $uid = phoxy::Load('user/store')->MyUID();
+    phoxy_protected_assert($uid, "Please log in to continue");
+    return $uid;
+  }
 }

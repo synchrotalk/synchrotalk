@@ -7,11 +7,6 @@ class store extends api
     return phoxy::Load("user")->get_uid();
   }
 
-  public function RequireUID()
-  {
-    phoxy_protected_assert($this->MyUID(), "Please log in to continue");
-  }
-
   private $db;
 
   public function GetDB()
