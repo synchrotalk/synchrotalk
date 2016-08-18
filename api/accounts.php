@@ -103,8 +103,32 @@ class accounts extends api
     return $this->loaded_accounts[$account] = $obj;
   }
 
+  public function user($account)
+  {
+    // Make sure we are signed in
+    $this->get_account_object($account);
+
+    $ret = db::Query("SELECT *
+      FROM personal.account_cache
+      WHERE account_id=$1 AND key=$2",
+      [$account, "user"], true);
+
+    return json_decode($ret->data, true);
+  }
+
   protected function welcome($account)
   {
+    return
+    [
+      "design" => "accounts/create/welcome",
+      "data" =>
+      [
+        'user' => $this->user($account),
+        'next' => 'inbox',
+      ],
+      "script" => "user",
+      "before" => "user.login",
+    ];
   }
 /*
   protected function add($network, $login, $password)
