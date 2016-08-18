@@ -67,6 +67,45 @@ class accounts extends api
 
     return $res->account_id;
   }
+
+  private $loaded_accounts = [];
+
+  private function get_account_object($account)
+  {
+    if (!empty($this->loaded_accounts[$account]))
+      return $this->loaded_accounts[$account];
+
+    $account = db::Query("SELECT *
+      FROM personal.tokens
+      WHERE uid=$1
+        AND account_id=$2",
+        [db::UID(), $account], true);
+
+    phoxy_protected_assert($account(), "Account not found. Please connect again");
+
+    $networks = phoxy::Load('networks');
+
+    phoxy_protected_assert($networks->supported($account->network), "Social network unsupported");
+
+    $obj = $networks->get_network_object($account->network);
+
+    echo "TODO: Check if token expired";
+    $user = $obj->sign_in($account->token_data);
+
+    phoxy_protected_assert($user, "Unable to sign in");
+    echo "TODO: Make token refresh sequence automatically";
+
+    db::Query("INSERT INTO personal.account_cache
+        (account_id, key, data)
+        VALUES ($1, $2, $3)",
+        [$account, "user", json_encode($user)]);
+
+    return $this->loaded_accounts[$account] = $obj;
+  }
+
+  protected function welcome($account)
+  {
+  }
 /*
   protected function add($network, $login, $password)
   {
@@ -78,50 +117,14 @@ class accounts extends api
 
     phoxy_protected_assert($networks->supported($network), "Social network unsupported");
 
-    $insta = $networks->get_network_object($network);
 
-    $user = $insta->log_in($login, $password);
-    phoxy_protected_assert($user, "Login/password invalid");
 
-    $user['network'] = $network;
 
-    $accounts[$network] =
-    [
-      "network" => $network,
-      "login" => $login,
-      "password" => $password,
-      "user" => $user,
-    ];
-
-    return
-    [
-      "design" => "accounts/create/welcome",
-      "data" =>
-      [
-        'user' => $user,
-        'next' => 'inbox',
-      ],
-      "script" => "user",
-      "before" => "user.login",
-    ];
-  }
-
-  public function &access_accounts_private_storage()
-  {
-    $storage_functor = phoxy::Load('user')->StorageShortcut();
-    $accounts = &$storage_functor()['accounts'];
-
-    if (!is_array($accounts))
-      $accounts = [];
-
-    return function &() use (&$accounts)
-    {
-      return $accounts;
-    };
   }
 */
   public function connected()
   {
+
     return phoxy::Load('user')->GetSessionStorage()['accounts'];
   }
 
