@@ -70,16 +70,16 @@ class accounts extends api
 
   private $loaded_accounts = [];
 
-  private function get_account_object($account)
+  private function get_account_object($account_id)
   {
-    if (!empty($this->loaded_accounts[$account]))
-      return $this->loaded_accounts[$account];
+    if (!empty($this->loaded_accounts[$account_id]))
+      return $this->loaded_accounts[$account_id];
 
     $account = db::Query("SELECT *
       FROM personal.tokens
       WHERE uid=$1
         AND account_id=$2",
-        [db::UID(), $account], true);
+        [db::UID(), $account_id], true);
 
     phoxy_protected_assert($account(), "Account not found. Please connect again");
 
@@ -90,7 +90,7 @@ class accounts extends api
     $obj = $networks->get_network_object($account->network);
 
     echo "TODO: Check if token expired";
-    $user = $obj->sign_in($account->token_data);
+    $user = $obj->sign_in(json_decode($account->token_data, true));
 
     phoxy_protected_assert($user, "Unable to sign in");
     echo "TODO: Make token refresh sequence automatically";
@@ -98,9 +98,9 @@ class accounts extends api
     db::Query("INSERT INTO personal.account_cache
         (account_id, key, data)
         VALUES ($1, $2, $3)",
-        [$account, "user", json_encode($user)]);
+        [$account_id, "user", json_encode($user, true)]);
 
-    return $this->loaded_accounts[$account] = $obj;
+    return $this->loaded_accounts[$account_id] = $obj;
   }
 
   public function user($account)
