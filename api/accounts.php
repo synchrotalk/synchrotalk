@@ -58,17 +58,56 @@ class accounts extends api
     if (is_null($expiration))
       $expiration = time() + 10 * 365 * 3600;
 
-    $res = db::Query("
-      INSERT INTO personal.tokens
-        (uid, network, expiration, token_data)
-        VALUES ($1, $2, timestamptz 'epoch' + $3 * interval '1 second', $4)
-        RETURNING account_id",
-        [ db::UID(), $network, $expiration, json_encode($token) ], true);
+
+    echo "This causing extra signin request, refactor";
+    list($obj, $user) = $this->network_signin($network, $token);
+
+    $account = db::Query("SELECT account_id
+        FROM personal.tokens
+        WHERE uid=$1
+          AND profile_id=$2", [db::UID(), $user->id], true);
+
+    if ($account())
+    { // account known, update token
+      $res = db::Query("
+        UPDATE personal.tokens
+          SET token_data=$2
+            , expiration=timestamptz 'epoch' + $3 * interval '1 second'
+          WHERE account_id=$1
+          RETURNING account_id",
+          [ $account->account_id, json_encode($token), $expiration ], true);
+    }
+    else
+    { // account unknown. store
+      $res = db::Query("
+        INSERT INTO personal.tokens
+          (uid, network, expiration, token_data)
+          VALUES ($1, $2, timestamptz 'epoch' + $3 * interval '1 second', $4)
+          RETURNING account_id",
+          [ db::UID(), $network, $expiration, json_encode($token) ], true);
+    }
 
     return $res->account_id;
   }
 
   private $loaded_accounts = [];
+
+  private function network_signin($network, $token)
+  {
+    $networks = phoxy::Load('networks');
+
+    phoxy_protected_assert($networks->supported($account->network), "Social network unsupported");
+
+    $obj = $networks->get_network_object($network);
+
+    echo "TODO: Check if token expired";
+    $user = $obj->sign_in($token);
+
+    phoxy_protected_assert($user, "Unable to sign in");
+    echo "TODO: Make token refresh sequence automatically";
+
+    return [$obj, $user];
+  }
 
   private function get_account_object($account_id)
   {
@@ -83,17 +122,12 @@ class accounts extends api
 
     phoxy_protected_assert($account(), "Account not found. Please connect again");
 
-    $networks = phoxy::Load('networks');
-
-    phoxy_protected_assert($networks->supported($account->network), "Social network unsupported");
-
-    $obj = $networks->get_network_object($account->network);
-
-    echo "TODO: Check if token expired";
-    $user = $obj->sign_in(json_decode($account->token_data, true));
-
-    phoxy_protected_assert($user, "Unable to sign in");
-    echo "TODO: Make token refresh sequence automatically";
+    list($obj, $user)
+      = $this->network_signin
+        (
+          $account->network,
+          json_decode($account->token_data, true)
+        );
 
     db::Query("INSERT INTO personal.account_cache
         (account_id, key, data)

@@ -92,7 +92,8 @@ class auth extends api
 
     $token = $auth->$instruction($data);
 
-    $account = phoxy::Load('accounts')->save_network($this->network_name, $token);
+    $account = phoxy::Load('accounts')
+        ->save_network($this->network_name, $token);
 
     return
     [
