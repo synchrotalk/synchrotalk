@@ -34,12 +34,11 @@ class user extends api
 
   private function login()
   {
-    db::Query("INSERT INTO users VALUES ()");
-
-    $uid = db::AffectedID();
+    $uid = phoxy::Load('user/store')->Register();
 
     $my_name = &$this->get_uid();
     $my_name = $uid;
+    return $uid;
   }
 
   public function get_uid()
