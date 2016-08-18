@@ -96,9 +96,10 @@ class auth extends api
 
     return
     [
-      'data' =>
+      "design" => "accounts/create/finished",
+      "data" =>
       [
-        'account' => $account,
+        "account" => $account,
       ],
     ];
   }
