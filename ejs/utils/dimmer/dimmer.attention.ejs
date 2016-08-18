@@ -1,7 +1,8 @@
 <%
 __this.CascadeDesign('utils/dimmer/dimmer.attention.content', __this);
 
-var content = __this.escape().DrawTo();
+__this.content = __this.escape().DrawTo();
 
-__this.CascadeDesign('utils/dimmer/dimmer', { content: content });
+__this.CascadeDesign('utils/dimmer/dimmer', __this);
+
 %>
