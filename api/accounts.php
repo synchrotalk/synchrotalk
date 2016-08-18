@@ -105,13 +105,17 @@ class accounts extends api
 
   public function user($account)
   {
-    // Make sure we are signed in
-    $this->get_account_object($account);
-
     $ret = db::Query("SELECT *
       FROM personal.account_cache
       WHERE account_id=$1 AND key=$2",
       [$account, "user"], true);
+
+    if (!$ret())
+    {
+      // Update cache. It can't endless loop
+      $this->get_account_object($account);
+      return $this->user($account);
+    }
 
     return $ret->data;
   }
