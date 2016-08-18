@@ -100,6 +100,10 @@ class accounts extends api
         VALUES ($1, $2, $3)",
         [$account_id, "user", json_encode($user, true)]);
 
+    db::Query("UPDATE personal.tokens
+        SET profile_id=$2
+        WHERE account_id=$1", [$account_id, $user->id]);
+
     return $this->loaded_accounts[$account_id] = $obj;
   }
 
