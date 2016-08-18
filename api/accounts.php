@@ -134,26 +134,14 @@ class accounts extends api
       "before" => "user.login",
     ];
   }
-/*
-  protected function add($network, $login, $password)
-  {
-    $accounts = $this->access_accounts_private_storage()();
 
-    phoxy_protected_assert(!isset($accounts[$network]), "In demo mode one account per social network");
-
-    $networks = phoxy::Load('networks');
-
-    phoxy_protected_assert($networks->supported($network), "Social network unsupported");
-
-
-
-
-  }
-*/
   public function connected()
   {
+    $accounts = db::Query("SELECT network, account_id, expiration
+      FROM personal.tokens
+      WHERE uid=$1", [db::UID()]);
 
-    return phoxy::Load('user')->GetSessionStorage()['accounts'];
+    return $accounts;
   }
 
   protected function itemize()
