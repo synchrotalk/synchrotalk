@@ -113,7 +113,7 @@ class accounts extends api
       WHERE account_id=$1 AND key=$2",
       [$account, "user"], true);
 
-    return json_decode($ret->data, true);
+    return $ret->data;
   }
 
   protected function welcome($account)
