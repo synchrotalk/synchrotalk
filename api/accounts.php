@@ -58,11 +58,14 @@ class accounts extends api
     if (is_null($expiration))
       $expiration = time() + 10 * 365 * 3600;
 
-    db::Query("
+    $res = db::Query("
       INSERT INTO personal.tokens
         (uid, network, expiration, token_data)
-        VALUES ($1, $2, timestamptz 'epoch' + $3 * interval '1 second', $4)",
-        [ db::UID(), $network, $expiration, json_encode($token) ]);
+        VALUES ($1, $2, timestamptz 'epoch' + $3 * interval '1 second', $4)
+        RETURNING account_id",
+        [ db::UID(), $network, $expiration, json_encode($token) ], true);
+
+    return $res->account_id;
   }
 /*
   protected function add($network, $login, $password)

@@ -92,7 +92,15 @@ class auth extends api
 
     $token = $auth->$instruction($data);
 
-    phoxy::Load('accounts')->save_network($this->network_name, $token);
+    $account = phoxy::Load('accounts')->save_network($this->network_name, $token);
+
+    return
+    [
+      'data' =>
+      [
+        'account' => $account,
+      ],
+    ];
   }
 
   private function RefactorDirectAnswer()
