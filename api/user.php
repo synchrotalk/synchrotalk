@@ -38,17 +38,18 @@ class user extends api
 
     $my_name = &$this->get_uid();
     $my_name = $uid;
+
     return $uid;
   }
 
-  public function get_uid()
+  private function &get_uid()
   {
     return $this->GetSessionStorage()['username'];
   }
 
   private function is_logined()
   {
-    return null == $this->get_uid();
+    return !is_null($this->get_uid());
   }
 
   public function uid()

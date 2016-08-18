@@ -4,7 +4,7 @@ class store extends api
 {
   public function MyUID()
   {
-    return phoxy::Load("user")->get_uid();
+    return phoxy::Load("user")->uid();
   }
 
   private $db;
@@ -33,6 +33,6 @@ class store extends api
 
   public function Register()
   {
-    return db::Query("INSERT INTO personal.users DEFAULT VALUES RETURNING uid", [], true);
+    return db::Query("INSERT INTO personal.users DEFAULT VALUES RETURNING uid", [], true)->uid;
   }
 }

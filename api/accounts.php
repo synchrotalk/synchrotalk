@@ -53,6 +53,18 @@ class accounts extends api
     ];
   }
 
+  public function save_network($network, $token, $expiration = null)
+  {
+    if (is_null($expiration))
+      $expiration = time() + 10 * 365 * 3600;
+
+    db::Query("
+      INSERT INTO personal.tokens
+        (uid, network, expiration, token_data)
+        VALUES ($1, $2, timestamptz 'epoch' + $3 * interval '1 second', $4)",
+        [ db::UID(), $network, $expiration, json_encode($token) ]);
+  }
+/*
   protected function add($network, $login, $password)
   {
     $accounts = $this->access_accounts_private_storage()();
@@ -104,7 +116,7 @@ class accounts extends api
       return $accounts;
     };
   }
-
+*/
   public function connected()
   {
     return phoxy::Load('user')->GetSessionStorage()['accounts'];
