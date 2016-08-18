@@ -58,6 +58,12 @@ try
   \phoxy::Start();
 } catch (Exception $e)
 {
-  $message = ["error" => $e->getMessage()];
+  $message =
+  [
+    "error" => $e->getMessage(),
+    "warnings" => ob_get_contents(),
+  ];
+
+  ob_end_clean();
   die (json_encode($message, true));
 }
