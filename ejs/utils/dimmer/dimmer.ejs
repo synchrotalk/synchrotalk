@@ -1,0 +1,26 @@
+<div class="ui abstract dimmer">
+  <%= __this.content %>
+</div>
+
+<%
+__this.DeferCascade(function()
+{
+  $('body').append(__this.first().detach());
+
+  __this.first()
+    .dimmer
+    ({
+      onHide: function()
+      {
+        phoxy.Defer(function()
+        {
+          __this.first().remove();
+        }, 5000);
+      }
+    })
+    .dimmer('show');
+
+  if (__this.next)
+    phoxy.MenuCall(__this.next);
+});
+%>

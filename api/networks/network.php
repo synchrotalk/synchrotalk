@@ -25,5 +25,8 @@ class network extends api
 
   private function init_network_object($obj, $network)
   {
+    $settings = conf()->networks->init->$network;
+
+    $obj->init($settings);
   }
 }

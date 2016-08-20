@@ -34,6 +34,14 @@ var warmup_obj =
       return arguments.callee.origin.apply(this, arguments);
     })
 
+    phoxy.Override('ApiAnswer', function show_server_log(data)
+    {
+      if (data["warnings"])
+        phoxy.Log(2, "Server palm off", data["warnings"]);
+
+      return arguments.callee.origin.apply(this, arguments);
+    })
+
     phoxy.Log(3, "Phoxy ready. Starting");
   },
   OnBeforeFirstApiCall: function()

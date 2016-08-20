@@ -1,0 +1,44 @@
+<div class='player' type='<%@ __this.type %>' curid="-1">
+  <h2>Sequence player for <%@ __this.type %></h2>
+<%
+for (var k in __this.sequence)
+  __this.CascadeDesign('networks/auth/sequence.queue.step', __this.sequence[k]);
+%>
+</div>
+
+<%
+function find_next_and_trigger(requirements)
+{
+  var scheduled = __this.first().find('.scheduled.step');
+
+  if (scheduled.length == 0)
+    return __this.first().trigger('player.finish');
+
+  var next = scheduled.first();
+  next.trigger('step.spawn', [__this.network, __this.type, requirements]);
+}
+
+__this.DeferCascade(function()
+{
+  var first = __this.first();
+
+  first.on('player.next', function(e, requirements)
+  {
+    var curid = parseInt(first.attr('curid')) + 1;
+
+    if (curid == 0)
+      first.trigger('player.start');
+
+    first.attr('curid', curid);
+
+    find_next_and_trigger(requirements);
+  });
+
+  first.on('step.complete', function(e, requirements)
+  {
+    first.trigger('player.next', requirements);
+  });
+
+  first.trigger('player.next');
+});
+%>

@@ -1,7 +1,7 @@
 <%
 __this.CascadeDesign('utils/dimmer/dimmer.attention',
   {
-    content: "Hello " +  __this.user.nickname,
+    content: "Just a second please",
     next: __this.next,
   });
 
@@ -15,8 +15,10 @@ __this.DeferCascade(function()
           phoxy.Defer(function()
           {
             __this.first().dimmer('hide');
-          }, 5000);
+          }, 3000);
         }
       })
 });
+
+phoxy.MenuCall(['accounts/welcome', __this.account]);
 %>

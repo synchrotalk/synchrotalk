@@ -1,0 +1,42 @@
+<div class='markdown'>
+</div>
+
+<%
+function finally_markdownit()
+{
+  var md = markdownit();
+  var html = md.render(__this.data);
+
+  __this.first().append(html);
+}
+
+if (window.markdownit)
+  return __this.Defer(finally_markdownit);
+
+
+__this.CascadeDesign('snippets/head',
+  {
+    scripts:
+    [
+      "//cdnjs.cloudflare.com/ajax/libs/markdown-it/7.0.0/markdown-it.min.js",
+    ]
+  }, DefineMarkdown);
+
+function DefineMarkdown()
+{
+  // Workaround issue caused AMD flow
+
+  require(
+    [
+      "//cdnjs.cloudflare.com/ajax/libs/markdown-it/7.0.0/markdown-it.min.js"
+    ],
+    function(markdownfactory)
+    {
+      window.markdownit = function()
+      {
+        return new markdownfactory();
+      }
+      finally_markdownit();
+    });
+}
+%>

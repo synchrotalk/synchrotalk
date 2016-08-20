@@ -11,6 +11,7 @@ function phoxy_conf()
 {
   $ret = phoxy_default_conf();
   $ret["api_xss_prevent"] = PRODUCTION;
+  $ret["autostart"] = false;
 
   return $ret;
 }
@@ -25,6 +26,17 @@ function default_addons()
   return $ret;
 }
 
+ob_start();
+function append_warnings_to_object($that)
+{
+  $buffer = ob_get_contents();
+  ob_end_clean();
+
+  if (!empty($buffer))
+    $that->obj["warnings"] = $buffer;
+}
+
+
 include('phoxy/server/phoxy_return_worker.php');
 phoxy_return_worker::$add_hook_cb = function($that)
 {
@@ -32,16 +44,26 @@ phoxy_return_worker::$add_hook_cb = function($that)
 
   if ($USER_SENSITIVE)
     $that->obj['cache'] = 'no';
+
+  $that->hooks[] = append_warnings_to_object;
 };
 
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-//phpsql\OneLineConfig(conf()->db->connection_string);
+include('phoxy/load.php');
+
+phoxy::Load("user/store/db");
 
 try
 {
-  include('phoxy/load.php');
+  \phoxy::Start();
 } catch (Exception $e)
 {
-  $message = ["error" => $e->getMessage()];
+  $message =
+  [
+    "error" => $e->getMessage(),
+    "warnings" => ob_get_contents(),
+  ];
+
+  ob_end_clean();
   die (json_encode($message, true));
 }

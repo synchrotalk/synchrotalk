@@ -1,0 +1,12 @@
+<%
+console.log('STEP', __this);
+
+
+if (__this.commands.length == 0)
+  return __this.CascadeDesign('networks/auth/step.complete');
+
+if (__this.commands.data != undefined)
+  return __this.CascadeDesign('networks/auth/step.command.redirect', __this.commands);
+
+__this.CascadeDesign('networks/auth/step.command.composite', __this.commands);
+%>

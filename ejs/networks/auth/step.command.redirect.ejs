@@ -1,0 +1,35 @@
+<%
+var awaiting;
+var dimmer;
+
+function block_popup(cb)
+{
+  awaiting = cb;
+}
+
+function continue_popup()
+{
+  dimmer = this.first();
+  phoxy.Defer(function()
+  {
+    awaiting({url: __this.data});
+  }, 3000);
+}
+
+__this.CascadeDesign("utils/popup/cockpit", block_popup);
+
+__this.CascadeDesign('utils/dimmer/dimmer.attention',
+  {
+    content: "Social network requests your action",
+  }, continue_popup);
+
+__this.DeferCascade(function()
+{
+  __this.first().on('popup.closed', function()
+  {
+    dimmer.dimmer('hide');
+    __this.first().before(phoxy.DeferRender('networks/auth/step.complete', {}));
+  });
+});
+
+%>

@@ -1,0 +1,10 @@
+<%
+  var base_url = phoxy.ConstructURL(['networks/auth', __this.network]);
+  __this.CascadeRequest(
+      [
+        base_url + '/make_step'
+        , __this.type
+        , __this.step
+        , __this.context
+      ]);
+%>
