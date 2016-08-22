@@ -1,7 +1,11 @@
-<tr id='<%@ __this.id %>' network='<%@ __this.network %>'>
+<tr id='<%@ __this.id %>' account='<%@ __this.account %>'>
   <td class='collapsing'>
     <h4 class="ui image header">
-      <% __this.CascadeDesign('thread/users/one.image', __this.users[0]) %>
+      <%
+      __this.users[0].account = __this.account;
+      __this.CascadeDesign('thread/users/one.image.by-id',
+        __this.users[0])
+      %>
       <div class="content">
         <%@ __this.title %>
         <div class="sub header">
