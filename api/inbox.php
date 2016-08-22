@@ -27,49 +27,40 @@ class inbox extends api
 
   private function MarkWithNetwork($network, $inbox)
   {
-    return array_map(function($thread) use ($network)
+    foreach ($inbox as $thread)
     {
-      $thread['network'] = $network;
-      return $this->ReqursiveRemoveCandidates($thread);
-    }, $inbox);
+      $ret = get_object_vars($thread);
+      $ret['network'] = $network;
+
+      yield $ret;
+
+      // TODO: Please return this code later
+      // return $this->ReqursiveRemoveCandidates($thread);
+    };
   }
 
   protected function itemize()
   {
     $accounts = phoxy::Load('accounts/tokens')->connected();
 
-
-
-//    $networks = phoxy::Load('networks');
+    $networks = phoxy::Load('networks');
 
     $inbox = [];
     foreach ($accounts as $account)
     {
-          var_dump($account);
-          continue;
-
       $connection = $networks->get_network_object($account->network);
-
-
-
-      echo "TODO: Check token expiration";
-
-
-    // $connection->sign_in(json_decode()
-      //  $login = $connection->log_in($account['login'], $account['password']);
-
+      $connection->sign_in($account->token_data);
       $threads = $connection->threads();
 
-      var_dump($threads);
+      $marked_threads = $this->MarkWithNetwork($network, $threads);
 
       $inbox = array_merge
       (
         $inbox
-        , $this->MarkWithNetwork($network, $threads['requests'])
-        , $this->MarkWithNetwork($network, $threads['inbox']['threads'])
+        , iterator_to_array($marked_threads)
       );
     }
-    die();
+
     return
     [
       "design" => "inbox/itemize",
