@@ -1,0 +1,35 @@
+<%
+__this.Defer(function()
+{
+  var first = __this.first();
+  var container =
+  {
+    width: first.width(),
+    height: first.height(),
+  };
+
+  __this.url.sort(function (a, b)
+  {
+    if (a.width != b.width)
+      return a.width - b.width;
+
+    return a.height - b.height;
+  });
+
+  for (var k in __this.url)
+  {
+    var candidate = __this.url[k];
+
+    if (candidate.width < container.width ||
+      candidate.height < container.height)
+      continue;
+
+    return __this.first().attr('src', candidate.url);
+  }
+
+  // We do not match container requirements. Attach highest resolution
+  __this.first().attr('src', __this.url.pop().url);
+});
+%>
+
+<img class="<%@ __this.classes %>">
