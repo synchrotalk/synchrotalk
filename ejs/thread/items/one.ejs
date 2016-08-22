@@ -1,4 +1,11 @@
 <%
+
+if (__this.text)
+  __this.CascadeDesign('thread/items/one.text', __this);
+
+return;
+
+// Refactor, no more types. Now each message may have or have not attaches
 var supported =
 [
   'text',

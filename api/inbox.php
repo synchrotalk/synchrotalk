@@ -52,7 +52,7 @@ class inbox extends api
       $connection->sign_in($account->token_data);
       $threads = $connection->threads();
 
-      $marked_threads = $this->MarkWithNetwork($network, $threads);
+      $marked_threads = $this->MarkWithNetwork($account->network, $threads);
 
       $inbox = array_merge
       (
