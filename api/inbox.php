@@ -25,12 +25,12 @@ class inbox extends api
     return $ret;
   }
 
-  private function MarkWithNetwork($network, $inbox)
+  private function MarkWithAccount($account, $inbox)
   {
     foreach ($inbox as $thread)
     {
       $ret = get_object_vars($thread);
-      $ret['network'] = $network;
+      $ret['account'] = $account;
 
       yield $ret;
 
@@ -52,7 +52,8 @@ class inbox extends api
       $connection->sign_in($account->token_data);
       $threads = $connection->threads();
 
-      $marked_threads = $this->MarkWithNetwork($account->network, $threads);
+      $marked_threads =
+        $this->MarkWithAccount($account->account_id, $threads);
 
       $inbox = array_merge
       (
