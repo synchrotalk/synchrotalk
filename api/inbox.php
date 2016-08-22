@@ -36,25 +36,31 @@ class inbox extends api
 
   protected function itemize()
   {
-    $accounts = phoxy::Load('accounts')->connected();
+    $accounts = phoxy::Load('accounts/tokens')->connected();
 
-    var_dump($accounts);
-    die();
 
-    $networks = phoxy::Load('networks');
+
+//    $networks = phoxy::Load('networks');
 
     $inbox = [];
     foreach ($accounts as $account)
     {
+          var_dump($account);
+          continue;
+
       $connection = $networks->get_network_object($account->network);
+
+
 
       echo "TODO: Check token expiration";
 
 
-
+    // $connection->sign_in(json_decode()
       //  $login = $connection->log_in($account['login'], $account['password']);
 
       $threads = $connection->threads();
+
+      var_dump($threads);
 
       $inbox = array_merge
       (
@@ -63,7 +69,7 @@ class inbox extends api
         , $this->MarkWithNetwork($network, $threads['inbox']['threads'])
       );
     }
-
+    die();
     return
     [
       "design" => "inbox/itemize",

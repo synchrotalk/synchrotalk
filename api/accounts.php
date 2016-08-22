@@ -175,7 +175,7 @@ class accounts extends api
 
   public function connected()
   {
-    $accoutns = phoxy::Load('accounts/tokens')->connected();
+    $accounts = phoxy::Load('accounts/tokens')->connected();
 
     $public_fields =
     [
@@ -184,14 +184,15 @@ class accounts extends api
       'expiration',
     ];
 
-    return array_map(function ($account) use ($public_fields)
-      {
-        $ret = [];
-        foreach ($account as $key => $value)
-          if (in_array($key, $public_fields))
-            $ret[$key] = $value;
-        return $ret;
-      }, $accoutns->__2array());
+
+    foreach ($accounts as $account)
+    {
+      $ret = [];
+      foreach ($account as $key => $value)
+        if (in_array($key, $public_fields))
+          $ret[$key] = $value;
+      yield $ret;
+    };
   }
 
   protected function itemize()
@@ -201,7 +202,7 @@ class accounts extends api
       "design" => "accounts/list",
       "data" =>
       [
-        "accounts" => $this->connected(),
+        "accounts" => iterator_to_array($this->connected()),
       ],
     ];
   }
