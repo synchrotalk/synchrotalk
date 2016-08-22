@@ -175,11 +175,23 @@ class accounts extends api
 
   public function connected()
   {
-    $accounts = db::Query("SELECT network, account_id, expiration
-      FROM personal.tokens
-      WHERE uid=$1", [db::UID()]);
+    $accoutns = phoxy::Load('accounts/tokens')->connected();
 
-    return $accounts;
+    $public_fields =
+    [
+      'network',
+      'account_id',
+      'expiration',
+    ];
+
+    return array_map(function ($account) use ($public_fields)
+      {
+        $ret = [];
+        foreach ($account as $key => $value)
+          if (in_array($key, $public_fields))
+            $ret[$key] = $value;
+        return $ret;
+      }, $accoutns->__2array());
   }
 
   protected function itemize()

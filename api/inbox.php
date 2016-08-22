@@ -37,13 +37,22 @@ class inbox extends api
   protected function itemize()
   {
     $accounts = phoxy::Load('accounts')->connected();
+
+    var_dump($accounts);
+    die();
+
     $networks = phoxy::Load('networks');
 
     $inbox = [];
-    foreach ($accounts as $network => $account)
+    foreach ($accounts as $account)
     {
-      $connection = $networks->get_network_object($network);
-      $login = $connection->log_in($account['login'], $account['password']);
+      $connection = $networks->get_network_object($account->network);
+
+      echo "TODO: Check token expiration";
+
+
+
+      //  $login = $connection->log_in($account['login'], $account['password']);
 
       $threads = $connection->threads();
 
