@@ -1,5 +1,6 @@
 <%
-var event = new window.Date(__this.snap * 1000);
+var snap = __this.snap || __this.data;
+var event = new window.Date(snap * 1000);
 var now = new window.Date(Date.now());
 
 var difference = now - event;
@@ -14,6 +15,12 @@ __this.silent_today = true;
 
 __this.CascadeDesign('utils/time/snap.to.relative.date', __this);
 
-if (diff.getFullYear() == 1970 && diff.getMonth() == 0 && diff_days < 6)
+
+if (diff.getFullYear() > 1970 || diff.getMonth() > 0)
+  return;
+
+if (diff_days < 1)
   __this.CascadeDesign('utils/time/snap.to.relative.time', __this);
+else if (diff_days < 2)
+  __this.CascadeDesign('utils/time/snap.to.time', __this);
 %>

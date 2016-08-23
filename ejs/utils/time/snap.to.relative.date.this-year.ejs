@@ -1,5 +1,6 @@
 <%
-var event = new window.Date(__this.snap * 1000);
+var snap = __this.snap || __this.data;
+var event = new window.Date(snap * 1000);
 var now = new window.Date(Date.now());
 
 var difference = now - event;
@@ -13,16 +14,12 @@ var diff_days = diff.getDate() - 1;
 
 if (diff.getMonth() || diff_days > 6)
 {
-  var obj =
+  __this.format =
   {
-    snap: __this.snap,
-    format:
-    {
-      month: 'short',
-      day: 'numeric',
-    }
-  };
-  return __this.CascadeDesign('utils/time/echo.by.format', obj);
+    month: 'short',
+    day: 'numeric',
+  }
+  return __this.CascadeDesign('utils/time/echo.by.format', __this);
 }
 
 if (!diff_days)

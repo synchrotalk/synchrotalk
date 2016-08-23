@@ -1,5 +1,6 @@
 <%
-var event = new window.Date(__this.snap * 1000);
+var snap = __this.snap || __this.data;
+var event = new window.Date(snap * 1000);
 var now = new window.Date(Date.now());
 
 var difference = now - event;
