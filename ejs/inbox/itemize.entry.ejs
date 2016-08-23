@@ -7,14 +7,19 @@
         __this.users[0])
       %>
       <div class="content">
-        <%@ __this.title %>
+        <% __this.CascadeDesign('networks/icon.by.account-id', __this.account) %>
+
         <div class="sub header">
-          <%@ __this.network %>
+          <% __this.CascadeDesign(
+            'utils/time/snap.to.relative',
+              __this.last_messages[0].created
+              || __this.last_messages[0].updated) %>
         </div>
       </div>
     </h4>
   </td>
   <td>
+    <div class='header'><%@ __this.title %></div>
     <% __this.CascadeDesign('thread/items/one', __this.last_messages[0]) %>
   </td>
 </tr>
