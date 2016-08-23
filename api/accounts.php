@@ -172,6 +172,12 @@ class accounts extends api
   {
     $accounts = phoxy::Load('accounts/tokens')->connected();
 
+    foreach ($accounts as $account)
+      yield $this->filter_sensitive_token_data($account);
+  }
+
+  private function filter_sensitive_token_data($account)
+  {
     $public_fields =
     [
       'network',
@@ -179,15 +185,12 @@ class accounts extends api
       'expiration',
     ];
 
+    $ret = [];
+    foreach ($account as $key => $value)
+      if (in_array($key, $public_fields))
+        $ret[$key] = $value;
 
-    foreach ($accounts as $account)
-    {
-      $ret = [];
-      foreach ($account as $key => $value)
-        if (in_array($key, $public_fields))
-          $ret[$key] = $value;
-      yield $ret;
-    };
+    return $ret;
   }
 
   protected function itemize()
@@ -199,6 +202,16 @@ class accounts extends api
       [
         "accounts" => iterator_to_array($this->connected()),
       ],
+    ];
+  }
+
+  protected function info($account_id)
+  {
+    $account = phoxy::Load('accounts/tokens')->info($account_id);
+
+    return
+    [
+      "data" => $this->filter_sensitive_token_data($account)
     ];
   }
 }
