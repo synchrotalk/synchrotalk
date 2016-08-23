@@ -8,7 +8,7 @@ __this.Defer(function()
   if (!__this.first().parent())
     return;
 
-  var task = phoxy.ApiRequest(['thread/read', __this.network, __this.id],
+  var task = phoxy.ApiRequest(['thread/read', __this.account_id, __this.thread_id],
     function(r)
     {
       slice_items(r.items, r.users);
