@@ -26,6 +26,9 @@ class thread extends api
     [
       'data' =>
       [
+        // When i spare a time phoxy have to overcome that
+        'account_id' => $account_id,
+        'thread_id' => $thread_id,
         'items' => $ret
       ],
     ];

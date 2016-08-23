@@ -1,21 +1,21 @@
 <div class='comment' id='<%@ __this.id %>'>
   <a class='avatar'>
-    <% __this.CascadeDesign('thread/users/author.image', {author: __this.item.author, users: __this.users}) %>
+    <% __this.CascadeDesign('thread/owner/image', __this) %>
   </a>
-
 
   <div class='content'>
     <a class='author'>
-      <% __this.CascadeDesign('thread/users/author.name', {author: __this.item.author, users: __this.users}) %>
+      <% __this.CascadeDesign('thread/owner/name', __this) %>
     <a>
     <div class='metadata'>
       <div class='date'>
-        <% __this.CascadeDesign('utils/time/snap.to.relative', __this.item) %>
+        <% __this.CascadeDesign('utils/time/snap.to.relative'
+          , __this.updated || __this.created) %>
       </div>
     </div>
 
     <div class='text'>
-      <% __this.CascadeDesign('thread/items/one', __this.item) %>
+      <% __this.CascadeDesign('thread/items/one', __this) %>
     </div>
 
   </div>
