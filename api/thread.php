@@ -2,30 +2,44 @@
 
 class thread extends api
 {
-  protected function Reserve($network, $id)
+  protected function Reserve($account_id, $thread_id)
   {
     return
     [
       "design" => "thread/index",
-      "data" => $this->Read($network, $id),
+      "data" =>
+      [
+        'account_id' => $account_id,
+        'thread_id' => $thread_id,
+      ],
     ];
   }
 
-  protected function Read($network, $id)
+  protected function Read($account_id, $thread_id)
   {
-    $networks = phoxy::Load('networks');
-    $connection = $networks->get_network_object($network);
+    $network = phoxy::Load('networks/network')
+      ->by_account_id($account_id);
 
-    $ret = $connection->fetch_messages($id);
-    $ret['network'] = $network;
-    return $ret;
+    $ret = $network->messages($thread_id);
+
+    return
+    [
+      'data' =>
+      [
+        'items' => $ret
+      ],
+    ];
   }
 
-  protected function Send($network, $id, $text)
+  protected function Send($account_id, $thread_id, $text)
   {
-    $networks = phoxy::Load('networks');
-    $connection = $networks->get_network_object($network);
+    $network = phoxy::Load('networks/network')
+      ->by_account_id($account_id);
 
-    return $connection->send_message($id, $text);
+
+    return
+    [
+      'data' => $network->message_send($thread_id , $text),
+    ];
   }
 }
