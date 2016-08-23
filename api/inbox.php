@@ -48,9 +48,7 @@ class inbox extends api
     $inbox = [];
     foreach ($accounts as $account)
     {
-      $connection = $networks->get_network_object($account->network);
-      $connection->sign_in($account->token_data);
-      $threads = $connection->threads();
+      $threads = $this->threads($account->account_id);
 
       $marked_threads =
         $this->MarkWithAccount($account->account_id, $threads);
@@ -70,5 +68,26 @@ class inbox extends api
         "inbox" => $inbox,
       ],
     ];
+  }
+
+  public function threads($account_id)
+  {
+    $resolver = function($network, $cb, $uid)
+    {
+      $threads = $network->threads();
+      if (!$threads)
+        return false;
+
+      return $cb($threads, time() + 600);
+    };
+
+    return phoxy::Load('accounts/cache')
+      ->account($account_id)
+      ->Retrieve
+      (
+        'threads',
+        0,
+        $resolver
+      );
   }
 }

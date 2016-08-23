@@ -26,10 +26,21 @@ class cache extends api
     if ($cache())
     {
       echo "TODO: Check expiration";
-      return $cache->data;
+      return $this->WorkaroundPHPSQLIssue($cache->data->__2array());
     }
 
     return $this->ResolveMissingCache($type, $resource_id, $resolver);
+  }
+
+  private function WorkaroundPHPSQLIssue($data)
+  {
+    if (!isset($data[0]))
+      return (object)$data;
+
+    foreach ($data as &$value)
+      $value = $this->WorkaroundPHPSQLIssue($value);
+
+    return $data;
   }
 
   private function ResolveMissingCache($type, $resource_id, $resolver)
