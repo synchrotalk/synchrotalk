@@ -4,8 +4,23 @@ class users extends api
 {
   protected function info($account_id, $uid)
   {
-    $network = phoxy::Load('networks/network')->by_account_id($account_id);
-    $user = $network->user($uid);
+    $resolver = function($network, $cb, $uid)
+    {
+      $user = $network->user($uid);
+      if (!$user)
+        return false;
+
+      return $cb($user, time() + 3600 * 24);
+    };
+
+    $user = phoxy::Load('accounts/cache')
+      ->account($account_id)
+      ->Retrieve
+      (
+        'user',
+        $uid,
+        $resolver
+      );
 
     return
     [
