@@ -19,3 +19,13 @@
   </div>
   <% __this.CascadeDesign('thread/items/one', __this.last_messages[0]) %>
 </div>
+
+<%
+__this.Defer(function()
+{
+  __this.first().click(function()
+  {
+    phoxy.MenuCall(['thread', __this.account, __this.id]);
+  });
+});
+%>
