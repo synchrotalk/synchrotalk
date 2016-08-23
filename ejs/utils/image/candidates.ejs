@@ -2,6 +2,19 @@
 __this.Defer(function()
 {
   var first = __this.first();
+
+  if (first.hasClass('fluid'))
+    first = first.parent();
+
+  // For elements with negative width
+  var minimal_acceptable_width = 10;
+  var minimal_acceptable_height = 0;
+
+
+  while (first.width() < minimal_acceptable_width
+    || first.height() < minimal_acceptable_height)
+    first = first.parent();
+
   var container =
   {
     width: first.width(),
