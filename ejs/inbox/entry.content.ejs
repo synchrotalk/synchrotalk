@@ -1,0 +1,21 @@
+<div class='content'>
+  <div class='header'>
+    <span class='title'>
+      <% __this.CascadeDesign('networks/icon.by.account-id', __this.account) %>
+      <%
+        if (__this.title)
+          __this.CascadeDesign('snippets/echo', __this.title);
+        else
+          __this.CascadeDesign('users/name.by.user-id', __this.users[0]);
+      %>
+    </span>
+
+    <span class="sub header date">
+      <% __this.CascadeDesign(
+        'utils/time/snap.to.relative',
+          __this.last_messages[0].created
+          || __this.last_messages[0].updated) %>
+    </span>
+  </div>
+  <% __this.CascadeDesign('thread/items/one', __this.last_messages[0]) %>
+</div>

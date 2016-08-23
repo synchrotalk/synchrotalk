@@ -1,4 +1,4 @@
-<tr id='<%@ __this.id %>' account='<%@ __this.account %>'>
+<tr id='<%@ __this.id %>' account='<%@ __this.account %>' class='thread'>
   <td class='collapsing'>
     <h4 class="ui image header">
       <%
@@ -6,21 +6,13 @@
       __this.CascadeDesign('thread/users/one.image.by-id',
         __this.users[0])
       %>
-      <div class="content">
-        <% __this.CascadeDesign('networks/icon.by.account-id', __this.account) %>
+      <span class="content">
 
-        <div class="sub header">
-          <% __this.CascadeDesign(
-            'utils/time/snap.to.relative',
-              __this.last_messages[0].created
-              || __this.last_messages[0].updated) %>
-        </div>
       </div>
     </h4>
   </td>
   <td>
-    <div class='header'><%@ __this.title %></div>
-    <% __this.CascadeDesign('thread/items/one', __this.last_messages[0]) %>
+    <% __this.CascadeDesign('inbox/entry.content', __this) %>
   </td>
 </tr>
 
