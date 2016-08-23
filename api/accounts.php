@@ -129,11 +129,6 @@ class accounts extends api
           json_decode($account->token_data, true)
         );
 
-    db::Query("INSERT INTO personal.account_cache
-        (account_id, key, data)
-        VALUES ($1, $2, $3)",
-        [$account_id, "user", json_encode($user, true)]);
-
     db::Query("UPDATE personal.tokens
         SET profile_id=$2
         WHERE account_id=$1", [$account_id, $user->id]);
