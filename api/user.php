@@ -47,7 +47,7 @@ class user extends api
     return $this->GetSessionStorage()['username'];
   }
 
-  private function is_logined()
+  protected function is_logined()
   {
     return !is_null($this->get_uid());
   }
