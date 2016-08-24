@@ -7,14 +7,12 @@ __this.Defer(function()
   {
     var message =
     {
-      users: __this.users,
-      item:
+      owner:
       {
-        author: 0,
-        type: 'text',
-        snap: parseInt(Date.now() / 1000),
-        text: text,
-      }
+        id: 0
+      },
+      created: parseInt(Date.now() / 1000),
+      text: text,
     };
 
     var design = phoxy.DeferRender('thread/chatbox/one', message, function()
