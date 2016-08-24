@@ -1,0 +1,20 @@
+<div class='login'>
+  <h2 class='ui header'>Choose network to login</h2>
+
+  <div class='networks'>
+<%
+__this.CascadeRequest('networks/supported');
+%>
+  <div>
+
+</div>
+
+<%
+__this.Defer(function()
+{
+  __this.first().on('network.choose', function(e, network)
+  {
+    phoxy.MenuCall(["networks/auth/add", network]);
+  });
+});
+%>
