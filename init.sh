@@ -3,6 +3,7 @@
 composer update
 ln -s vendor/phoxy/phoxy/ phoxy
 ln -s ../vendor/phoxy/snippets ejs/snippets
+ln -s ../../networks networks
 touch secret.yaml
 mkdir networks
 

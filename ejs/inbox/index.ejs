@@ -1,1 +1,7 @@
 <% __this.CascadeRequest('inbox/itemize') %>
+<%
+__this.DeferCascade(function()
+{
+  $('.dimmer').remove();
+})
+%>
