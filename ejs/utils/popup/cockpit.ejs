@@ -1,0 +1,55 @@
+<popup></popup>
+
+<%
+
+function popitup(url)
+{ // http://www.quirksmode.org/js/popup.html
+  return window.open(url, phoxy._.internal.GenerateUniqueID(),'height=500,width=800');
+
+  return false;
+}
+
+function second_try()
+{
+  res = confirm("Please allow pop-up this is required for continue");
+
+  if (res)
+    return popitup(__this.url)
+}
+
+var popup;
+function wait_for_focus_and_begin()
+{
+  if (!window.focus)
+    return phoxy.Defer(arguments.callee, 100);
+
+  newwindow = popitup(__this.url);
+  if (newwindow == undefined)
+    second_try();
+  if (newwindow == undefined)
+    return alert("Unable to create popup, sorry");
+
+  newwindow.focus();
+  popup = newwindow;
+
+  __this.first().trigger('popup.openned', popup);
+
+  __this.first().on('popup.close', function()
+  {
+    popup.close();
+  });
+
+  emit_when_closed();
+}
+
+function emit_when_closed()
+{
+  if (!popup.closed)
+    return phoxy.Defer(arguments.callee, 100);
+
+  __this.first().trigger('popup.closed');
+}
+
+__this.Defer(wait_for_focus_and_begin);
+
+%>

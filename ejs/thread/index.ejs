@@ -1,7 +1,9 @@
 <div class='thread'>
 
   <div class='content'>
-    <% __this.CascadeDesign('thread/chatbox/index', __this) %>
+    <% __this.CascadeSupply(
+      'thread/chatbox/index',
+      ['thread/read', __this.account_id, __this.thread_id]) %>
   </div>
 
   <div class='input'>

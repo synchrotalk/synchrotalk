@@ -25,33 +25,38 @@ class inbox extends api
     return $ret;
   }
 
-  private function MarkWithNetwork($network, $inbox)
+  private function MarkWithAccount($account, $inbox)
   {
-    return array_map(function($thread) use ($network)
+    foreach ($inbox as $thread)
     {
-      $thread['network'] = $network;
-      return $this->ReqursiveRemoveCandidates($thread);
-    }, $inbox);
+      $ret = get_object_vars($thread);
+      $ret['account'] = $account;
+
+      yield $ret;
+
+      // TODO: Please return this code later
+      // return $this->ReqursiveRemoveCandidates($thread);
+    };
   }
 
   protected function itemize()
   {
-    $accounts = phoxy::Load('accounts')->connected();
+    $accounts = phoxy::Load('accounts/tokens')->connected();
+
     $networks = phoxy::Load('networks');
 
     $inbox = [];
-    foreach ($accounts as $network => $account)
+    foreach ($accounts as $account)
     {
-      $connection = $networks->get_network_object($network);
-      $login = $connection->log_in($account['login'], $account['password']);
+      $threads = $this->threads($account->account_id);
 
-      $threads = $connection->threads();
+      $marked_threads =
+        $this->MarkWithAccount($account->account_id, $threads);
 
       $inbox = array_merge
       (
         $inbox
-        , $this->MarkWithNetwork($network, $threads['requests'])
-        , $this->MarkWithNetwork($network, $threads['inbox']['threads'])
+        , iterator_to_array($marked_threads)
       );
     }
 
@@ -63,5 +68,26 @@ class inbox extends api
         "inbox" => $inbox,
       ],
     ];
+  }
+
+  public function threads($account_id)
+  {
+    $resolver = function($network, $cb, $uid)
+    {
+      $threads = $network->threads();
+      if (!$threads)
+        return false;
+
+      return $cb($threads, time() + 60);
+    };
+
+    return phoxy::Load('accounts/cache')
+      ->account($account_id)
+      ->Retrieve
+      (
+        'threads',
+        0,
+        $resolver
+      );
   }
 }

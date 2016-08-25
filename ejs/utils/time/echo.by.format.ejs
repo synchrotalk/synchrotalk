@@ -3,7 +3,8 @@
 
 var intlDate = new Intl.DateTimeFormat(undefined, __this.format);
 
-var d = new Date(__this.snap * 1000);
+var snap = __this.snap || __this.data;
+var d = new Date(snap * 1000);
 var string = intlDate.format(d);
 
 __this.__append(string);

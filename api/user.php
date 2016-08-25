@@ -6,7 +6,7 @@ class user extends api
   {
     return
     [
-      'design' => 'user/login',
+      'design' => 'accounts/login/index',
     ];
   }
 
@@ -34,22 +34,22 @@ class user extends api
 
   private function login()
   {
-    db::Query("INSERT INTO users VALUES ()");
-
-    $uid = db::AffectedID();
+    $uid = phoxy::Load('user/store')->Register();
 
     $my_name = &$this->get_uid();
     $my_name = $uid;
+
+    return $uid;
   }
 
-  private function get_uid()
+  private function &get_uid()
   {
     return $this->GetSessionStorage()['username'];
   }
 
-  private function is_logined()
+  protected function is_logined()
   {
-    return null == $this->get_uid();
+    return !is_null($this->get_uid());
   }
 
   public function uid()

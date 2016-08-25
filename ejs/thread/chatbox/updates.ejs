@@ -3,51 +3,52 @@
 </div>
 
 <%
+var refresh_frequency = 5;
+
 __this.Defer(function()
 {
   if (!__this.first().parent())
     return;
 
-  var task = phoxy.ApiRequest(['thread/read', __this.network, __this.id],
+  var task = phoxy.ApiRequest(['thread/read', __this.account_id, __this.thread_id],
     function(r)
     {
-      slice_items(r.items, r.users);
+      slice_items(r.data);
     }
   );
 
 
-  phoxy.Defer(arguments.callee, 3000);
-}, 3000);
+  phoxy.Defer(arguments.callee, refresh_frequency * 1000);
+}, refresh_frequency * 1000);
 
-var last_snap = __this.items[0].snap;
-function slice_items(items, users)
+var last_snap = __this.items[0].updated || __this.items[0].created;
+function slice_items(data)
 {
   var to_show = [];
 
-  for (var k in items)
-    if (items[k].snap > last_snap)
-      to_show.push(items[k]);
+  for (var k in data.items)
+    if ((data.items[k].updated || data.items[k].created) > last_snap)
+      to_show.push(data.items[k]);
     else
       break;
 
   if (to_show.length == 0)
     return;
 
-  last_snap = items[0].snap;
+  last_snap = (data.items[0].updated || data.items[0].created);
+  data.items = to_show;
 
-  __this.first().trigger('new.messages', [to_show, users]);
+  __this.first().trigger('new.messages', [data]);
 }
 
 
 __this.Defer(function()
 {
-  __this.first().on('new.messages', function sliceitems(e, items, users)
+  __this.first().on('new.messages', function sliceitems(e, data)
   {
-    var design = phoxy.DeferRender('thread/chatbox/itemize.functor',
-    {
-      users: users,
-      items: items
-    }, function()
+    var design =
+      phoxy.DeferRender('thread/chatbox/itemize.functor'
+      , data, function()
     {
       this.first().trigger('height.changed');
     });

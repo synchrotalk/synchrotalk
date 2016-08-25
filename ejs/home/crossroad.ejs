@@ -1,0 +1,6 @@
+<%
+if (__this.is_logined)
+  __this.CascadeRequest('inbox');
+else
+  __this.CascadeRequest('user');
+%>

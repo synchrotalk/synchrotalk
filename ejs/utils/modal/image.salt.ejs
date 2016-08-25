@@ -6,6 +6,11 @@
       {
         __this.first().parents('.modal').modal('hide');
       })
+
+      this.first().one('load progress', function()
+      {
+        __this.first().parents('.modal').modal('refresh');
+      });
     }) %>
   </div>
 </div>

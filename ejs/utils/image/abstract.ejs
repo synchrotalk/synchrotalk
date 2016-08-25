@@ -1,10 +1,18 @@
 <%
+var data = __this.data || __this.url;
+
 var url;
 
-if (typeof __this.url != 'undefined')
-  url = __this.url;
-else
-  url = __this.candidates[0].url;
+if (typeof data != 'undefined')
+{
+  if (typeof data == 'string')
+    url = __this.data;
+  else if (Array.isArray(__this.data))
+    return __this.CascadeDesign('utils/image/candidates', __this);
+  else
+    return __this.CascadeDesign('utils/image/candidates.ugly', __this);
+}
+
 %>
 
 <img class="<%@ __this.classes %>" src="<%@ url %>">

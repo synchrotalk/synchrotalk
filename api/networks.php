@@ -7,7 +7,7 @@ class networks extends api
     $plugins = conf()->plugins->available->__2array();
 
     if (!is_null($name))
-      return in_array($name, $plugins);
+      return[ "data" => in_array($name, $plugins) ];
 
     return
     [
@@ -29,7 +29,8 @@ class networks extends api
 
   public function get_network_object($name)
   {
-    return $this->hub()->$name;
+    $classname = "$name\\$name";
+    return $this->hub()->$classname;
   }
 
   private $hub;

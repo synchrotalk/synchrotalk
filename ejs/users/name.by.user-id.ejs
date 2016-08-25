@@ -1,0 +1,7 @@
+<%
+
+var account_id = __this.account || __this.account_id;
+var user_id = __this.user_id || __this.user || __this.id;
+
+__this.CascadeSupply('users/name', ['networks/users/info', account_id, user_id]);
+%>

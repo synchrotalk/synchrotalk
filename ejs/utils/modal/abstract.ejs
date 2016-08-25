@@ -1,3 +1,8 @@
+<%
+if (__this.data == undefined)
+  __this.data = __this;
+%>
+
 <div class="ui basic modal">
   <% __this.CascadeDesign.apply(__this, __this.data) %>
 </div>
@@ -8,9 +13,11 @@ __this.DeferCascade(function()
   __this.first()
     .modal(
     {
+      detachable: false,
       duration: 200,
       onHidden: function()
       {
+        __this.first().trigger('modal.close');
         __this.first().remove();
       }
     })

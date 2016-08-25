@@ -1,27 +1,18 @@
-<tr id='<%@ __this.id %>' network='<%@ __this.network %>'>
+<tr id='<%@ __this.id %>' account='<%@ __this.account %>' class='thread'>
   <td class='collapsing'>
     <h4 class="ui image header">
-      <% __this.CascadeDesign('thread/users/one.image', __this.users[0]) %>
-      <div class="content">
-        <%@ __this.title %>
-        <div class="sub header">
-          <%@ __this.network %>
-        </div>
+      <%
+      __this.users[0].account = __this.account;
+      __this.CascadeDesign('thread/users/one.image.by-id',
+        __this.users[0])
+      %>
+      <span class="content">
+
       </div>
     </h4>
   </td>
   <td>
-    <% __this.CascadeDesign('thread/items/one', __this.items[0]) %>
+    <% __this.CascadeDesign('inbox/entry.content', __this) %>
   </td>
 </tr>
-
-<%
-__this.Defer(function()
-{
-  __this.first().click(function()
-  {
-    phoxy.MenuCall(['thread', $(this).attr('network'), $(this).attr('id')]);
-  });
-});
-%>
 

@@ -2,12 +2,12 @@
 
 function DrawMessages()
 {
-  var obj = { users: __this.users };
   for (var k in __this.items)
   {
     var v = __this.items[k];
-    obj.item = v;
-    this.CascadeDesign('thread/chatbox/one', obj);
+    v.account_id = __this.account_id;
+
+    this.CascadeDesign('thread/chatbox/one', v);
   }
 }
 

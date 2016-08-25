@@ -1,0 +1,19 @@
+<%
+
+var candidates = __this.url;
+__this.url = [];
+
+for (var k in candidates)
+{
+  var resolution = k.split('x');
+
+  __this.url.push
+  ({
+    width: resolution[0],
+    height: resolution[1],
+    url: candidates[k],
+  });
+}
+
+__this.CascadeDesign('utils/image/candidates', __this);
+%>

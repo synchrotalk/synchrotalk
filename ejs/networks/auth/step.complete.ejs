@@ -1,0 +1,9 @@
+<%
+__this.Defer(function()
+{
+  if (!__this.requirements)
+    __this.requirements = {};
+
+  __this.first().trigger('step.complete', [__this.requirements]);
+});
+%>
