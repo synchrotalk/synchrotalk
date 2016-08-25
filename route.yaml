@@ -1,4 +1,4 @@
-production: 0
+production: 1
 route:
 # forbid hidden files, and parent directory access
   - url: \/\..*
