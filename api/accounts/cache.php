@@ -20,7 +20,8 @@ class cache extends api
       FROM personal.account_cache
       WHERE account_id=$1
         AND type=$2
-        AND resource_id=$3",
+        AND resource_id=$3
+        AND expired < now()",
         [$this->AccountID(), $type, $resource_id], true);
 
     if ($cache())
@@ -54,7 +55,7 @@ class cache extends api
     {
       $return = $data;
 
-      $this->Update($type, $resource_id, $data);
+      $this->Update($type, $resource_id, $data, $expiration);
 
       return true;
     };
@@ -66,12 +67,21 @@ class cache extends api
     return $return;
   }
 
-  public function Update($type, $resource_id, $data)
+  public function Update($type, $resource_id, $data, $expiration)
   {
+    // TODO: Update if exists
+    db::Query("DELETE FROM personal.account_cache WHERE expired < now()");
+
     db::Query("INSERT INTO personal.account_cache
-        (account_id, type, resource_id, data)
-        VALUES ($1, $2, $3, $4)",
-        [$this->AccountID(), $type, $resource_id, json_encode($data, true)]);
+        (account_id, type, resource_id, data, expired)
+        VALUES ($1, $2, $3, $4, 'epoch'::timestamp + $5::int8 * '1 second'::interval)",
+        [
+          $this->AccountID(),
+          $type,
+          $resource_id,
+          json_encode($data, true),
+          $expiration
+        ]);
   }
 
   public function AccountID()
