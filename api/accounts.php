@@ -136,21 +136,9 @@ class accounts extends api
     return $this->loaded_accounts[$account_id] = $obj;
   }
 
-  public function user($account)
+  public function user($account_id)
   {
-    $ret = db::Query("SELECT *
-      FROM personal.account_cache
-      WHERE account_id=$1 AND key=$2",
-      [$account, "user"], true);
-
-    if (!$ret())
-    {
-      // Update cache. It can't endless loop
-      $this->get_account_object($account);
-      return $this->user($account);
-    }
-
-    return $ret->data;
+    return phoxy::Load('networks/users')->info($account_id);
   }
 
   protected function welcome($account)

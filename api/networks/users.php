@@ -2,11 +2,12 @@
 
 class users extends api
 {
-  protected function info($account_id, $uid)
+  protected function info($account_id, $uid = null)
   {
     $resolver = function($network, $cb, $uid)
     {
       $user = $network->user($uid);
+
       if (!$user)
         return false;
 
