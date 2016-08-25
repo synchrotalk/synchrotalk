@@ -78,7 +78,7 @@ class inbox extends api
       if (!$threads)
         return false;
 
-      return $cb($threads, time() + 600);
+      return $cb($threads, time() + 60);
     };
 
     return phoxy::Load('accounts/cache')
