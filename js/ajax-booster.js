@@ -3,6 +3,10 @@ var ajax_booster =
   init()
   {
     phoxy.state.ajax.booster = {};
+    phoxy._.internal.Override(phoxy._.api, 'ajax', function _ajax_booster(url, cb)
+    {
+      ajax_booster.request(url, cb);
+    });
   }
   ,
   request: function(url, cb, data)
