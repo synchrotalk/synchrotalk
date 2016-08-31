@@ -21,7 +21,7 @@ var ajax_booster =
       if (typeof cb !== 'function')
         return _ajax_booster.origin(url, cb); // we cant help here it's synchronous
 
-      ajax_booster.request(url, cb);
+      ajax_booster.schedule(url, cb);
     });
   }
   ,
