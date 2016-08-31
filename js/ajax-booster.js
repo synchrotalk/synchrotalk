@@ -7,6 +7,14 @@ var ajax_booster =
     {
       ajax_booster.request(url, cb);
     });
+
+    phoxy._.internal.Override(EJS, 'request', function _ajax_booster(url, cb)
+    {
+      if (typeof cb !== 'function')
+        return _ajax_booster.origin(url, cb); // we cant help here it's synchronous
+
+      ajax_booster.request(url, cb);
+    });
   }
   ,
   request: function(url, cb, data)
