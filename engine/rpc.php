@@ -1,6 +1,8 @@
 <?php
 require_once('vendor/autoload.php');
 
+date_default_timezone_set("Europe/Moscow");
+
 if (!PRODUCTION)
 {
   error_reporting(E_ALL);
