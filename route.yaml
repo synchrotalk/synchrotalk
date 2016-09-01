@@ -6,33 +6,40 @@ route:
 
   - url: \/enjs.js
     rewrite: vendor/phoxy/enjs/enjs.js
+    max_age: 25200 # 1 week
 
   - url: \/less
     script: engine/less.php
+    max_age: 25200 # 1 week
 
   - url: \/(.+\.js)$
     static: true
     compress: true
     minify: true
     mime: application/javascript
+    max_age: 25200 # 1 week
 
   - url: \/(.+\.css)$
     static: true
     compress: true
     mime: text/css
+    max_age: 25200 # 1 week
 
   - url: \/(.+\.ejs)$
     static: true
     compress: true
     mime: text/ejs
+    max_age: 25200 # 1 week
 
   - url: \/assets\/(.+\.png)$
     static: true
     mime: image/png
+    max_age: 25200 # 1 week
 
   - url: \/assets\/(.+\.jpg)$
     static: true
     mime: image/jpg
+    max_age: 25200 # 1 week
 
   - url: \/robots\.txt
     rewrite: /api/utils/robot/robot

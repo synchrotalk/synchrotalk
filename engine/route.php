@@ -84,8 +84,10 @@ foreach ($route()->route as $route)
       else
         $mime = mime_content_type($route->minify);
 
+      $max_age = isset($route->max_age) ? $route->max_age : 600;
+
       @header("Last-Modified: $mtime");
-      @header('Cache-Control: public, max-age=600');
+      @header("Cache-Control: public, max-age={$max_age}");
       @header('Content-Type: '.$mime);
 
       if (!PRODUCTION || !isset($route->minify))
