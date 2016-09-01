@@ -20,9 +20,9 @@ function default_addons()
 {
   $ret =
   [
-    "cache" => PRODUCTION ? ['global' => '10m'] : "no",
     "result" => "canvas",
   ];
+
   return $ret;
 }
 
@@ -41,6 +41,9 @@ include('phoxy/server/phoxy_return_worker.php');
 phoxy_return_worker::$add_hook_cb = function($that)
 {
   global $USER_SENSITIVE;
+
+  if (!isset($that->obj['cache']))
+    $that->obj['cache'] = 'no';
 
   if ($USER_SENSITIVE)
     $that->obj['cache'] = 'no';
