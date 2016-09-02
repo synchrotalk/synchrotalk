@@ -4,6 +4,12 @@ route:
   - url: \/\..*
     forbid: true
 
+  - url: \/robots\.txt
+    rewrite: /api/utils/robot/robot
+
+  - url: \/sitemap\.xml
+    rewrite: /api/utils/robot/sitemap
+
   - url: \/enjs.js
     rewrite: vendor/phoxy/enjs/enjs.js
     max_age: 25200 # 1 week
@@ -12,38 +18,15 @@ route:
     script: engine/less.php
     max_age: 25200 # 1 week
 
-  - url: \/.+\.(js|css)$
+  - url: \/.+\.(js|css|ejs)$
     static: true
     compress: true
     minify: true
     max_age: 25200 # 1 week
 
-  - url: \/(.+\.ejs)$
+  - url: \/.+\.(png|jpg|ttf|txt|woff|woff2)$
     static: true
-    compress: true
-    mime: text/ejs
     max_age: 25200 # 1 week
-
-  - url: \/assets\/(.+\.png)$
-    static: true
-    mime: image/png
-    max_age: 25200 # 1 week
-
-  - url: \/assets\/(.+\.jpg)$
-    static: true
-    mime: image/jpg
-    max_age: 25200 # 1 week
-
-  - url: \/assets\/(.+\.ttf)$
-    static: true
-    mime: image/jpg
-    max_age: 25200 # 1 week
-
-  - url: \/robots\.txt
-    rewrite: /api/utils/robot/robot
-
-  - url: \/sitemap\.xml
-    rewrite: /api/utils/robot/sitemap
 
   - url: \/api\/?$
     rewrite: /api/main/home

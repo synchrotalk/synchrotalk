@@ -82,16 +82,13 @@ foreach ($route()->route as $route)
       if (isset($route->mime))
         $mime = $route->mime;
       else
-        $mime = _mime_content_type($route->static);
-
-      //var_dump($route->static, $mime);
-      //die();
+        $mime = '';
 
       $max_age = isset($route->max_age) ? $route->max_age : 600;
 
-      @header("Last-Modified: $mtime");
+      @header("Last-Modified: {$mtime}");
       @header("Cache-Control: public, max-age={$max_age}");
-      @header('Content-Type:');
+      @header("Content-Type: {$mime}");
 
       if (!PRODUCTION || !isset($route->minify))
         readfile($route->static);
