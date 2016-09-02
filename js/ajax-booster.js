@@ -6,8 +6,14 @@ var ajax_booster =
     phoxy.state.ajax.current_threads = 0;
 
     // http://www.browserscope.org/?category=network&v=top
-    phoxy.state.ajax.soft_cap = 6;
-    phoxy.state.ajax.hard_cap = phoxy.state.ajax.soft_cap + 2;
+    var web_requests_per_domain = 6;
+
+    // Let browser have grasp for other requests
+    phoxy.state.ajax.soft_cap = web_requests_per_domain - 1;
+
+    // Do not exceed cap a lot
+    phoxy.state.ajax.hard_cap = web_requests_per_domain * 1.5;
+
     phoxy.state.ajax.queue = [];
 
 
