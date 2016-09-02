@@ -21,7 +21,10 @@ class user extends api
   public function &GetSessionStorage()
   {
     if (session_status() != PHP_SESSION_ACTIVE)
+    {
+      session_cache_limiter("private_no_expire");
       session_start();
+    }
 
     return $_SESSION;
   }
