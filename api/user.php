@@ -10,7 +10,7 @@ class user extends api
     ];
   }
 
-  public function StorageShortcut()
+  private function StorageShortcut()
   {
     return function &()
     {
@@ -18,7 +18,7 @@ class user extends api
     };
   }
 
-  public function &GetSessionStorage()
+  private function &GetSessionStorage()
   {
     if (session_status() != PHP_SESSION_ACTIVE)
     {
