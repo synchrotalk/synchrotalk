@@ -39,6 +39,17 @@ var ajax_booster =
     this.push_to_queue(url, cb, data);
   }
   ,
+  low_priority_request: function(url, cb, data)
+  {
+    console.log('resheduling', phoxy.state.ajax.current_threads);
+
+    // if download not active, just start
+    if (!phoxy.state.ajax.current_threads)
+      return this.request(url, cb, data);
+
+    this.push_to_queue(url, cb, data, "front");
+  }
+  ,
   schedule: function(url, cb, data)
   {
     var task =
@@ -84,7 +95,7 @@ var ajax_booster =
     phoxy._.EarlyStage.ajax(url, cb)
   }
   ,
-  push_to_queue: function(url, cb, data)
+  push_to_queue: function(url, cb, data, front)
   {
     var task =
     {
@@ -93,7 +104,10 @@ var ajax_booster =
       data: data,
     };
 
-    phoxy.state.ajax.queue.push(task);
+    if (front)
+      phoxy.state.ajax.queue.unshift(task);
+    else
+      phoxy.state.ajax.queue.push(task);
   }
   ,
   pull_from_queue: function()
