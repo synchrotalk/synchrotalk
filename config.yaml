@@ -5,6 +5,3 @@ plugins:
   lib_path: plugin
 networks:
   icons:
-demo:
-  login:
-  password:
