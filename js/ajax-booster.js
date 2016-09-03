@@ -92,7 +92,10 @@ var ajax_booster =
   ,
   ajax: function(url, cb, data)
   {
-    phoxy._.EarlyStage.ajax(url, cb)
+    if (url === undefined)
+      return cb("");
+
+    phoxy._.EarlyStage.ajax(url, cb, data);
   }
   ,
   push_to_queue: function(url, cb, data, front)
