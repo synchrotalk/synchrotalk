@@ -27,7 +27,9 @@ class tokens extends api
   private function PrepareAccount($db_raw)
   {
     $ret = $db_raw->__2array();
-    $ret['token_data'] = json_decode($ret['token_data'], true);
+
+    if (is_string($ret['token_data']) && $ret['token_data'][0] == '{')
+      $ret['token_data'] = json_decode($ret['token_data'], true);
 
     return new phpa2o\phpa2o($ret);
   }
