@@ -56,7 +56,7 @@ phoxy_return_worker::$add_hook_cb = function($that)
   if ($USER_SENSITIVE)
     $that->NewCache(['global' => 'no']);
 
-  if (!isset($that->obj["data"]))
+  if (!isset($that->obj["data"]) && !isset($that->obj["error"]))
     $that->NewCache(['global' => '1w']);
 
   $that->hooks[] = append_warnings_to_object;
