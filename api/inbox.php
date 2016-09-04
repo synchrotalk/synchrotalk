@@ -75,7 +75,8 @@ class inbox extends api
     $resolver = function($network, $cb, $uid)
     {
       $threads = $network->threads();
-      if (!$threads)
+
+      if (!is_array($threads))
         return false;
 
       return $cb($threads, time() + 60);
