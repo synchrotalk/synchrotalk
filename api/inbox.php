@@ -60,6 +60,11 @@ class inbox extends api
       );
     }
 
+    usort($inbox, function ($a, $b)
+    {
+      return $b['updated'] - $a['updated'];
+    });
+
     return
     [
       "design" => "inbox/itemize",
