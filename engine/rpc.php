@@ -1,5 +1,6 @@
 <?php
 require_once('vendor/autoload.php');
+ini_set('xdebug.var_display_max_depth', 10);
 
 date_default_timezone_set("Europe/Moscow");
 
@@ -37,6 +38,9 @@ function default_addons()
 ob_start();
 function append_warnings_to_object($that)
 {
+  if (phoxy_conf()["debug_api"] && !phoxy_conf()["is_ajax_request"])
+    return;
+
   $buffer = ob_get_contents();
   ob_end_clean();
 
