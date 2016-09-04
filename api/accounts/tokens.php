@@ -28,7 +28,7 @@ class tokens extends api
   {
     $ret = $db_raw->__2array();
 
-    if (is_string($ret['token_data']) && $ret['token_data'][0] == '{')
+    if (!is_array($ret['token_data']))
       $ret['token_data'] = json_decode($ret['token_data'], true);
 
     return new phpa2o\phpa2o($ret);
