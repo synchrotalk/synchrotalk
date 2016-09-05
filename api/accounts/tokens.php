@@ -40,7 +40,11 @@ class tokens extends api
     db::Query("UPDATE personal.tokens
       SET token_data=$3
       WHERE uid=$1 AND account_id=$2",
-      [db::UID(), $account_id, json_encode($token)]);
+      [
+        db::UID()
+        , $account_id
+        , json_encode($token)
+      ]);
   }
 
   public function itemize()
