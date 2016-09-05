@@ -26,6 +26,9 @@ class user extends api
       session_start();
     }
 
+    global $USER_SENSITIVE;
+      $USER_SENSITIVE = 1;
+
     return $_SESSION;
   }
 
