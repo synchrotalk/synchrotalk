@@ -22,7 +22,8 @@ class user extends api
   {
     if (session_status() != PHP_SESSION_ACTIVE)
     {
-      session_cache_limiter("private_no_expire");
+      session_cache_limiter("");
+
       session_start();
     }
 
