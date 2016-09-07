@@ -1,0 +1,37 @@
+<div class='state badge'>
+<%
+__this.CascadeDesign('utils/state/ajax')
+__this.CascadeDesign('utils/state/cascade')
+%>
+</div>
+
+<%
+var showed = 0;
+
+__this.Defer(function()
+{
+  __this.first().on('state.show', function(e)
+  {
+    $(e.target).show();
+
+    if (!showed)
+      __this.first().show();
+
+    showed++;
+  });
+
+
+  __this.first().on('state.hide', function(e)
+  {
+    $(e.target).hide();
+
+    if (showed == 0)
+      return;
+
+    showed--;
+
+    if (!showed)
+      __this.first().hide();
+  });
+});
+%>
