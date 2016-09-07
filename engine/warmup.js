@@ -3,7 +3,6 @@ var warmup_obj =
   wait: true,
   config: "/api/phoxy",
   skip_initiation: true,
-  sync_cascade: true,
   OnWaiting: function()
   {
     phoxy._.EarlyStage.async_require[0] = "/enjs.js";

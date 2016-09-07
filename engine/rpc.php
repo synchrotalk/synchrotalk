@@ -13,13 +13,14 @@ if (!PRODUCTION)
 function phoxy_conf()
 {
   $ret = phoxy_default_conf();
-  $ret["api_xss_prevent"] = PRODUCTION;
+  $ret["api_csrf_prevent"] = PRODUCTION;
   $ret["autostart"] = false;
   $ret["cache"] =
   [
     "global" => "no",
     "session" => "1w",
   ];
+  $ret["sync_cascade"] = !PRODUCTION;
 
   return $ret;
 }
