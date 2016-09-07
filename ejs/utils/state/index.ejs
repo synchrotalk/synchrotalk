@@ -1,4 +1,4 @@
-<div class='state badge'>
+<div id='state' class='state badge'>
 <%
 __this.CascadeDesign('utils/state/ajax')
 __this.CascadeDesign('utils/state/cascade')
@@ -32,6 +32,22 @@ __this.Defer(function()
 
     if (!showed)
       __this.first().hide();
+  });
+
+  __this.first().on('state.update', function(e, what, value)
+  {
+    var badge = __this.first().find('.' + what);
+
+    if (!badge.length)
+      return;
+
+    var val_element = badge.find('.value');
+    var prev_value = val_element.html();
+
+    if ((prev_value == 0) != (value == 0))
+      badge.trigger(!!value ? 'state.show' : 'state.hide');
+
+    val_element.html(value);
   });
 });
 %>
