@@ -13,13 +13,14 @@ function before(what, where)
 {
   var task = phoxy.DeferRender("inbox/itemize.entry", what);
   $(where).before(task);
+
+  $('[account="' + what.account + '"]')
+    .filter('#' + what.id)
+    .remove();
 }
 
 __this.Defer(function()
 {
-  debugger;
-
-
   var container = __this.first().parents('table');
   var inbox = container.find('tr');
   __this.first().remove();
