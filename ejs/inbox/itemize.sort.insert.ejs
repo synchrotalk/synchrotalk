@@ -4,6 +4,11 @@ function updated(element)
   return $(element).attr('updated');
 }
 
+function id(element)
+{
+  return $(element).attr('id');
+}
+
 function before(what, where)
 {
   var task = phoxy.DeferRender("inbox/itemize.entry", what);
@@ -25,6 +30,13 @@ __this.Defer(function()
   // This loop causing compare each element each time
   while (i < i_max && n < n_max)
   {
+    if (__this.inbox[n].updated == updated(inbox[i]))
+      if (__this.inbox[n].id == id(inbox[i]))
+      {
+        i++, n++;
+        continue;
+      }
+
     if (__this.inbox[n].updated > updated(inbox[i]))
     {
       before(__this.inbox[n], inbox[i]);
