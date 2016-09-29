@@ -9,6 +9,7 @@ function id(element)
   return $(element).attr('id');
 }
 
+var sound_played = 0;
 function before(what, where)
 {
   var task = phoxy.DeferRender("inbox/itemize.entry", what);
@@ -17,6 +18,9 @@ function before(what, where)
   $('[account="' + what.account + '"]')
     .filter('#' + what.id)
     .remove();
+
+  if (!sound_played)
+    sound_played = new Audio('assets/fx/pipe.wav').play();
 }
 
 __this.Defer(function()
