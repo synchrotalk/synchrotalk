@@ -1,18 +1,12 @@
-<div class="centered fluid">
-  <div>
-    <div>
-      <div class="ui icon warning message">
-        <i class="warning icon"></i>
-        <div class="content">
-          <div class="header">
-            Error
-          </div>
+<%
+content =
+{
+  'type': __this.type,
+  'icon': __this.icon || 'warning',
+  'header': __this.header || 'error',
+  'content': __this.content || __this.error,
+};
 
-          <p><%@ __this.error %></p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+__this.CascadeDesign('utils/error/abstract.page', content);
+%>
 

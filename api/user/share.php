@@ -38,6 +38,16 @@ class share extends api
         ],
       ];
 
+    if ($domain_level < 2)
+      return
+      [
+        "design" => "utils/error/security.violation",
+        "data" =>
+        [
+          "error" => "You cant switch second level domain",
+        ],
+      ];
+
     return
     [
       "design" => "users/share.update",
