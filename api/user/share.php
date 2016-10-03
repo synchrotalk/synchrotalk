@@ -16,7 +16,14 @@ class share extends api
 
   protected function import($hash)
   {
-    $this->import_hash($hash);
+    return
+    [
+      "design" => "users/share.import",
+      "data" =>
+      [
+        "result" => $this->import_hash($hash),
+      ],
+    ];
   }
 
   private function create_hash()
@@ -34,10 +41,11 @@ class share extends api
 
   private function import_hash($hash)
   {
-    $account = db::Query("SELECT *
+    $account = db::Query("DELETE
       FROM personal.share
-      WHERE expired<now()
-        AND hash=$1",
+      WHERE expired > now()
+        AND hash=$1
+      RETURNING *",
       [$hash], true);
 
     phoxy_protected_assert($account(), "Access link expired");
