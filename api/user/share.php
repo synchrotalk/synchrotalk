@@ -26,6 +26,30 @@ class share extends api
     ];
   }
 
+  protected function update($version = null, $domain_level = 2)
+  {
+    if (is_null($version))
+      return
+      [
+        "design" => "utils/error/page",
+        "data" =>
+        [
+          "error" => "No version is specified. Update canceled",
+        ],
+      ];
+
+    return
+    [
+      "design" => "users/share.update",
+      "data" =>
+      [
+        "hash" => $this->create_hash(),
+        "version" => $version,
+        "domain_level" => $domain_level,
+      ],
+    ];
+  }
+
   private function create_hash()
   {
     $account = phoxy::Load('user')->uid();
