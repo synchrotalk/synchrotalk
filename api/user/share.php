@@ -85,6 +85,6 @@ class share extends api
     phoxy_protected_assert($account(), "Access link expired");
 
     phoxy::Load('user')->ResetSession();
-    phoxy::Load('user')->login($account->uid);
+    phoxy::Load('user')->login($account->account);
   }
 }
