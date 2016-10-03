@@ -4,7 +4,19 @@ class share extends api
 {
   protected function export()
   {
+    return
+    [
+      "design" => "users/share",
+      "data" =>
+      [
+        "hash" => $this->create_hash(),
+      ],
+    ];
+  }
 
+  protected function import($hash)
+  {
+    $this->import_hash($hash);
   }
 
   private function create_hash()
