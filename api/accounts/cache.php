@@ -78,7 +78,7 @@ class cache extends api
 
     db::Query("INSERT INTO personal.account_cache
         (account_id, type, resource_id, data, expired)
-        VALUES ($1, $2, $3, $4, 'epoch'::timestamp + $5::int8 * '1 second'::interval)",
+        VALUES ($1, $2, $3, $4, 'epoch'::timestamptz + $5::int8 * '1 second'::interval)",
         [
           $this->AccountID(),
           $type,
